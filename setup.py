@@ -12,7 +12,7 @@ setup(name='movielst',
                'console_scripts': ['movielst=movielst:main'],
            },
       install_requires=[
-          'guessit>2',
+          'guessit',
           'terminaltables',
           'docopt',
           'tqdm',
