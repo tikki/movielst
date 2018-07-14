@@ -8,10 +8,9 @@ This fork is intended to update the project to latest python version, fix existi
 
 ## Installation
 
-### Get the latest build from the Source
+### Install from source
 
-* Clone the repo `git clone https://github.com/Mozzo1000/movielst`
-* Run `python setup.py install`
+* Install with pip `pip install git+git://github.com/Mozzo1000/movielst.git`
 
 
 ### Dependencies
