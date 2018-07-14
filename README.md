@@ -1,7 +1,7 @@
 # movielst [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
-
-**A Python Application that displays all the information about all your movies in the command line.**
+movielst is a fork of moviemon, a Python application that displays information about all your movies in the command line.
+This fork is intended to update the project to latest python version, fix existing issues from the orignal project and add new features.
 
 ![ScreenShot](/img/moviemon.png)
 
