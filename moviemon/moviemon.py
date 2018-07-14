@@ -37,7 +37,7 @@ from colorama import init, Fore
 
 init()
 
-OMDB_URL = 'http://www.omdbapi.com/?'
+OMDB_URL = 'http://www.omdbapi.com/?apikey=37835d63&'
 
 EXT = (".3g2 .3gp .3gp2 .3gpp .60d .ajp .asf .asx .avchd .avi .bik .bix"
        ".box .cam .dat .divx .dmf .dv .dvr-ms .evo .flc .fli .flic .flv"
