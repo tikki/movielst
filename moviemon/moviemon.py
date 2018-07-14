@@ -24,17 +24,13 @@ Options:
 
 """
 
-from __future__ import print_function
 import os
 import textwrap
 import requests
 import json
 from guessit import guessit
 from terminaltables import AsciiTable
-try:
-    from urllib.parse import urlencode
-except:
-    from urllib import urlencode
+from urllib.parse import urlencode
 from docopt import docopt
 from tqdm import tqdm
 from colorama import init, Fore
