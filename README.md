@@ -48,6 +48,8 @@
   -T, --tomato-rev      Sort acc. to Tomato Rotten rating.(inc)
 ```
 
+### Credits
+[iCHAIT](https://github.com/iCHAIT) - Original developer
 
 ### Contribute
 
