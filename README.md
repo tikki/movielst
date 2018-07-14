@@ -1,28 +1,17 @@
-# moviemon
+# movielst [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+
 
 **A Python Application that displays all the information about all your movies in the command line.**
 
 ![ScreenShot](/img/moviemon.png)
 
 
-## [Live Demo](https://asciinema.org/a/35255)
-
-
 ## Installation
-
-### Using [pip](https://pypi.python.org/pypi/pip/)
-
-`$ pip install moviemon`
-
-You can also use [pipsi](https://github.com/mitsuhiko/pipsi) to install -
-
-`$ pipsi install moviemon`
-
 
 ### Get the latest build from the Source
 
-* Clone the repo git clone https://github.com/iCHAIT/moviemon
-* Run python setup.py install
+* Clone the repo `git clone https://github.com/Mozzo1000/movielst`
+* Run `python setup.py install`
 
 
 ### Dependencies
@@ -36,10 +25,10 @@ You can also use [pipsi](https://github.com/mitsuhiko/pipsi) to install -
 
 ### Usage:
 ```sh
-  moviemon.py PATH
-  moviemon [-i | -t | -g | -a | -c | -d | -y | -r | -I | -T ]
-  moviemon -h | --help
-  moviemon --version
+  movielst PATH
+  movielst [-i | -t | -g | -a | -c | -d | -y | -r | -I | -T ]
+  movielst -h | --help
+  movielst --version
 ```
 
 ### Options:
@@ -59,118 +48,6 @@ You can also use [pipsi](https://github.com/mitsuhiko/pipsi) to install -
   -T, --tomato-rev      Sort acc. to Tomato Rotten rating.(inc)
 ```
 
-### Examples -
-
-#### Display basic info about all your movies.
-
-
-`$ moviemon`
-
-
-![ScreenShot](/img/moviemon.png)
-
-
-#### Display all movies sorted according to their [IMDB](http://www.imdb.com/) ratings.
-
-
-`$ moviemon -i`
-
-
-![ScreenShot](/img/imdb-dec.png)
-
-
-#### Display all movies sorted according to their [Tomato Rotten](http://www.rottentomatoes.com/) ratings.
-
-
-`$ moviemon -t`
-
-
-![ScreenShot](/img/tomato-dec.png)
-
-
-**Display all movies with their Genres.**
-
-
-`$ moviemon -g`
-
-
-![ScreenShot](/img/genre.png)
-
-
-#### Display all movies with the awards they have received.
-
-
-`$ moviemon -a`
-
-
-![ScreenShot](/img/awards.png)
-
-
-#### Display all movies with their cast.
-
-
-`$ moviemon -c`
-
-
-![ScreenShot](/img/cast.png)
-
-
-#### Display all movies with their director(s).
-
-
-`$ moviemon -d`
-
-
-![ScreenShot](/img/directors.png)
-
-
-#### Display all movies with their release date.
-
-
-`$ moviemon -y`
-
-
-![ScreenShot](/img/released.png)
-
-
-#### Display all movies with their runtime.
-
-
-`$ moviemon -r`
-
-
-![ScreenShot](/img/runtime.png)
-
-
-#### Display all movies sorted according to their IMDB ratings.(inc)
-
-
-`$ moviemon -I`
-
-
-![ScreenShot](/img/imdb-inc.png)
-
-
-#### Display all movies sorted according to their Tomato Rotten ratings.(inc)
-
-
-`$ moviemon -T`
-
-
-![ScreenShot](/img/imdb-inc.png)
-
-
-### Stretch Goals
-
-* Use MongoDB to store data instead of storing json data in file.
-* Run a cron job to detect if the directory containing movies has been modified, if it has been modified then reindex the directory for accommodating new or deleted movies.
-* As mentioned by [@dufferzafar](https://github.com/dufferzafar) this can seriously become a movie database 'tagger' like [Picard](https://picard.musicbrainz.org/).
-
-
-### Shout-out
-
-Big thanks to [@dufferzafar](https://github.com/dufferzafar) for his [awesome work](https://github.com/dufferzafar/what-to-watch).
-
 
 ### Contribute
 
@@ -178,5 +55,4 @@ Found a bug or want to suggest a new feature? Report it by opening an issue. Fee
 
 
 ### License
-
-MIT © [Chaitanya Gupta](https://github.com/iCHAIT)
+`movielst` is released under the [MIT License](http://www.opensource.org/licenses/MIT).

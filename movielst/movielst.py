@@ -1,11 +1,11 @@
 
-"""moviemon.
+"""movielst.
 
 Usage:
-  moviemon PATH
-  moviemon [-i | -t | -g | -a | -c | -d | -y | -r | -I | -T ]
-  moviemon -h | --help
-  moviemon --version
+  movielst PATH
+  movielst [-i | -t | -g | -a | -c | -d | -y | -r | -I | -T ]
+  movielst -h | --help
+  movielst --version
 
 Options:
   -h, --help            Show this screen.
@@ -49,11 +49,11 @@ EXT = (".3g2 .3gp .3gp2 .3gpp .60d .ajp .asf .asx .avchd .avi .bik .bix"
 
 EXT = tuple(EXT.split())
 
-CONFIG_PATH = os.path.expanduser("~/.moviemon")
+CONFIG_PATH = os.path.expanduser("~/.movielst")
 
 
 def main():
-    args = docopt(__doc__, version='moviemon 1.0.11')
+    args = docopt(__doc__, version='movielst 1.0.11')
     util(args)
 
 
@@ -83,7 +83,7 @@ def util(docopt_args):
                           " folder is not movie type -\n")
                     for val in not_a_movie:
                         print(Fore.RED + val)
-                print(Fore.GREEN + "\n\nRun $moviemon\n\n")
+                print(Fore.GREEN + "\n\nRun $movielst\n\n")
             else:
                 print(Fore.RED + "\n\nGiven directory does not contain movies."
                       " Pass a directory containing movies\n\n")
@@ -230,7 +230,7 @@ def butler(table_data):
         with open(CONFIG_PATH) as config:
             movie_path = config.read()
     except IOError:
-        print(Fore.RED, "\n\nRun `$moviemon PATH` to "
+        print(Fore.RED, "\n\nRun `$movielst PATH` to "
               "index your movies directory.\n\n")
         quit()
     else:
@@ -240,7 +240,7 @@ def butler(table_data):
                 data = json.load(inp)
             return data, table
         except IOError:
-            print(Fore.YELLOW, "\n\nRun `$moviemon PATH` to "
+            print(Fore.YELLOW, "\n\nRun `movielst PATH` to "
                   "index your movies directory.\n\n")
             quit()
 
