@@ -14,7 +14,6 @@ setup(name='movielst',
       install_requires=[
           'guessit',
           'terminaltables',
-          'docopt',
           'tqdm',
           'colorama'
       ],

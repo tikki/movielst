@@ -17,7 +17,6 @@ This fork is intended to update the project to latest python version, fix existi
 
 * [guessit](https://github.com/guessit-io/guessit)
 * [terminaltables](https://github.com/Robpol86/terminaltables)
-* [docopt](https://github.com/docopt/docopt)
 * [tqdm](https://github.com/tqdm/tqdm)
 * [colorama](https://github.com/tartley/colorama)
 
@@ -33,7 +32,7 @@ This fork is intended to update the project to latest python version, fix existi
 ### Options:
 ```sh
   -h, --help            Show this screen.
-  --version             Show version.
+  -v, --version             Show version.
   PATH                  Path to movies dir. to index/reindex all movies.
   -i, --imdb            Sort acc. to IMDB rating.(dec)
   -t, --tomato          Sort acc. to Tomato Rotten rating.(dec)
