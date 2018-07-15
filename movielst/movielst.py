@@ -6,6 +6,7 @@ import json
 import argparse
 import pkg_resources
 import hashlib
+from .config import *
 from guessit import guessit
 from terminaltables import AsciiTable
 from urllib.parse import urlencode
@@ -13,8 +14,6 @@ from tqdm import tqdm
 from colorama import init, Fore
 
 init()
-
-OMDB_URL = 'http://www.omdbapi.com/?apikey=37835d63&'
 
 EXT = (".3g2 .3gp .3gp2 .3gpp .60d .ajp .asf .asx .avchd .avi .bik .bix"
        ".box .cam .dat .divx .dmf .dv .dvr-ms .evo .flc .fli .flic .flv"
@@ -26,10 +25,12 @@ EXT = (".3g2 .3gp .3gp2 .3gpp .60d .ajp .asf .asx .avchd .avi .bik .bix"
 
 EXT = tuple(EXT.split())
 
-CONFIG_PATH = os.path.expanduser("~/.movielst")
 
 
 def main():
+
+    create_config()
+
     parser = argparse.ArgumentParser()
     parser.add_argument('PATH', nargs='?', default='')
     parser.add_argument('-v', '--version', help='Show version.', action='version', version='%(prog)s ' + get_version())
@@ -59,11 +60,7 @@ def util(args):
             print("\n\nIndexing all movies inside ",
                   args.PATH + "\n\n")
 
-            dir_json = args.PATH + ".json"
-
-            # Save path to config file so we can read it later
-            with open(CONFIG_PATH, "w") as inpath:
-                inpath.write(args.PATH)
+            dir_json = get_setting('Index', 'location')
 
             scan_dir(args.PATH, dir_json)
 
@@ -229,8 +226,7 @@ def clean_table(tag1, tag2, item, table):
 
 def butler(table_data):
     try:
-        with open(CONFIG_PATH) as config:
-            movie_path = config.read()
+        movie_path = get_setting('Index', 'location')
     except IOError:
         print(Fore.RED, "\n\nRun `$movielst PATH` to "
               "index your movies directory.\n\n")
@@ -238,7 +234,7 @@ def butler(table_data):
     else:
         table = AsciiTable(table_data)
         try:
-            with open(movie_path + ".json") as inp:
+            with open(movie_path) as inp:
                 data = json.load(inp)
             return data, table
         except IOError:
@@ -303,6 +299,7 @@ def get_movie_info(name):
 
 
 def omdb(title, year):
+    OMDB_URL = 'http://www.omdbapi.com/?apikey=' + get_setting('API', 'OMDb_API_key') + '&'
     """ Fetch data from OMDB API. """
     params = {'t': title.encode('ascii', 'ignore'),
               'plot': 'full',
