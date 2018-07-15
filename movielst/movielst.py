@@ -101,7 +101,7 @@ def util(args):
         for item in data:
             item["Title"] = clean_table(item["Title"], None, item,
                                         table)
-            table_data.append([item["Title"], item["tomatoRating"]])
+            table_data.append([item["Title"], get_rotten_score(item)])
         sort_table(table_data, 1, True)
 
     elif args.genre:
@@ -176,7 +176,7 @@ def util(args):
         for item in data:
             item["Title"] = clean_table(item["Title"], None, item,
                                         table)
-            table_data.append([item["Title"], item["tomatoRating"]])
+            table_data.append([item["Title"], get_rotten_score(item)])
         sort_table(table_data, 1, False)
 
     else:
@@ -190,8 +190,15 @@ def util(args):
                                                        table)
             table_data.append([item["Title"], item["Genre"],
                                item["imdbRating"], item["Runtime"],
-                               item["tomatoRating"], item["Year"]])
+                               get_rotten_score(item), item["Year"]])
         sort_table(table_data, 0, False)
+
+
+def get_rotten_score(item):
+    if item['Ratings'][1]['Source'] == "Rotten Tomatoes":
+        return item['Ratings'][1]['Value']
+    else:
+        return "N/A"
 
 
 def sort_table(table_data, index, reverse):
