@@ -4,6 +4,8 @@ import textwrap
 import requests
 import json
 import argparse
+import pkg_resources
+import hashlib
 from guessit import guessit
 from terminaltables import AsciiTable
 from urllib.parse import urlencode
@@ -30,7 +32,7 @@ CONFIG_PATH = os.path.expanduser("~/.movielst")
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('PATH', nargs='?', default='')
-    parser.add_argument('-v', '--version', help='Show version.', action='version', version='%(prog)s 1.0.112')
+    parser.add_argument('-v', '--version', help='Show version.', action='version', version='%(prog)s ' + get_version())
     parser.add_argument('-i', '--imdb', help='Sort acc. to IMDB rating.(dec)', action='store_true')
     parser.add_argument('-t', '--tomato', help='Sort acc. to Tomato Rotten rating.(dec)', action='store_true')
     parser.add_argument('-g', '--genre', help='Show movie name with its genre.', action='store_true')
@@ -42,6 +44,12 @@ def main():
     parser.add_argument('-I', '--imdb-rev', help='Sort acc. to IMDB rating.(inc)', action='store_true')
     parser.add_argument('-T', '--tomato-rev', help='Sort acc. to Tomato Rotten rating.(inc)', action='store_true')
     util(parser.parse_args())
+
+def get_version():
+    try:
+        return pkg_resources.get_distribution("movielst").version
+    except pkg_resources.DistributionNotFound:
+        return "NOT INSTALLED ON SYSTEM! - SHA: " + hashlib.sha256(open(os.path.realpath(__file__), 'rb').read()).hexdigest()
 
 
 def util(args):
