@@ -7,6 +7,7 @@ import argparse
 import pkg_resources
 import hashlib
 from .config import *
+from .omdb import *
 from guessit import guessit
 from terminaltables import AsciiTable
 from urllib.parse import urlencode
@@ -291,38 +292,12 @@ def get_movie_info(name):
     movie_info = guessit(name)
     if movie_info['type'] == "movie":
         if 'year' in movie_info:
-            return omdb(movie_info['title'], movie_info['year'])
+            return get_omdb_movie(movie_info['title'], movie_info['year'])
         else:
-            return omdb(movie_info['title'], None)
+            return get_omdb_movie(movie_info['title'], None)
     else:
         not_a_movie.append(name)
 
-
-def omdb(title, year):
-    OMDB_URL = 'http://www.omdbapi.com/?apikey=' + get_setting('API', 'OMDb_API_key') + '&'
-    """ Fetch data from OMDB API. """
-    params = {'t': title.encode('ascii', 'ignore'),
-              'plot': 'full',
-              'type': 'movie',
-              'tomatoes': 'true'}
-
-    if year:
-        params['y'] = year
-
-    url = OMDB_URL + urlencode(params)
-    try:
-        r = requests.get(url)
-    except requests.exceptions.ConnectionError:
-        r.status_code = "Connection refused"
-    if r.status_code == 200:
-        if "application/json" in r.headers['content-type']:
-            return json.loads(r.text)
-        else:
-            print("Couldn't find the movie " + title)
-            return None
-    else:
-        print("There was some error fetching info from " + url)
-        return None
 
 if __name__ == '__main__':
     main()
