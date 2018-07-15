@@ -3,8 +3,7 @@
 movielst is a fork of moviemon, a Python application that displays information about all your movies in the command line.
 This fork is intended to update the project to latest python version, fix existing issues from the orignal project and add new features.
 
-![ScreenShot](/img/moviemon.png)
-
+![](https://i.imgur.com/LJZPrNl.gif)
 
 ## Installation
 
