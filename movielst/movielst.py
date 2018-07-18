@@ -7,6 +7,7 @@ import argparse
 import pkg_resources
 import hashlib
 import csv
+import xlsxwriter
 from .config import *
 from .omdb import *
 from guessit import guessit
@@ -195,6 +196,24 @@ def util(args):
         if 'excel' in args.export:
             export_type = args.export.index('excel')
             filename = args.export[:export_type] + args.export[export_type + 1:]
+
+            workbook = xlsxwriter.Workbook(filename[0])
+            worksheet = workbook.add_worksheet()
+            worksheet.set_row(0, None, workbook.add_format({'bold': True} ))
+            worksheet.autofilter(0, 0, len(item), 5)
+            row = 0
+            col = 0
+            for item in table_data:
+                worksheet.write_string(row, col, item[0])
+                worksheet.write_string(row, col + 1, item[1])
+                worksheet.write_string(row, col + 2, item[2])
+                worksheet.write_string(row, col + 3, item[3])
+                worksheet.write_string(row, col + 4, item[4])
+                worksheet.write_string(row, col + 5, item[5])
+                row += 1
+
+            workbook.close()
+
         elif 'csv' in args.export:
             export_type = args.export.index('csv')
             filename = args.export[:export_type] + args.export[export_type + 1:]
