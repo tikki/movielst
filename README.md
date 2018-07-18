@@ -18,6 +18,7 @@ This fork is intended to update the project to latest python version, fix existi
 * [terminaltables](https://github.com/Robpol86/terminaltables)
 * [tqdm](https://github.com/tqdm/tqdm)
 * [colorama](https://github.com/tartley/colorama)
+* [XlsxWriter](https://github.com/jmcnamara/XlsxWriter)
 
 
 ### Usage:
