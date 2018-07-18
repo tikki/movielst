@@ -24,7 +24,7 @@ This fork is intended to update the project to latest python version, fix existi
 ### Usage:
 ```sh
   movielst PATH
-  movielst [-i | -t | -g | -a | -c | -d | -y | -r | -I | -T ]
+  movielst [-i | -t | -g | -a | -c | -d | -y | -r | [-e type output] | -I | -T ]
   movielst -h | --help
   movielst --version
 ```
@@ -42,6 +42,8 @@ This fork is intended to update the project to latest python version, fix existi
   -d, --director        Show movie name with its director(s).
   -y, --year            Show movie name with its release date.
   -r, --runtime         Show movie name with its runtime.
+  -e type output, --export type output
+                        Export list to either csv or excel
   -I, --imdb-rev        Sort acc. to IMDB rating.(inc)
   -T, --tomato-rev      Sort acc. to Tomato Rotten rating.(inc)
 ```
