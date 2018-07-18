@@ -6,6 +6,7 @@ import json
 import argparse
 import pkg_resources
 import hashlib
+import csv
 from .config import *
 from .omdb import *
 from guessit import guessit
@@ -43,6 +44,7 @@ def main():
     parser.add_argument('-d', '--director', help='Show movie name with its director(s).', action='store_true')
     parser.add_argument('-y', '--year', help='Show movie name with its release date.', action='store_true')
     parser.add_argument('-r', '--runtime', help='Show movie name with its runtime.', action='store_true')
+    parser.add_argument('-e', '--export', help='Export list to either csv or excel', nargs=2)
     parser.add_argument('-I', '--imdb-rev', help='Sort acc. to IMDB rating.(inc)', action='store_true')
     parser.add_argument('-T', '--tomato-rev', help='Sort acc. to Tomato Rotten rating.(inc)', action='store_true')
     util(parser.parse_args())
@@ -176,6 +178,31 @@ def util(args):
                                         table)
             table_data.append([item["Title"], get_rotten_score(item)])
         sort_table(table_data, 1, False)
+    elif args.export:
+        table_data = [
+            ["TITLE", "GENRE", "IMDB", "RUNTIME", "TOMATO",
+             "YEAR"]]
+        data, table = butler(table_data)
+        for item in data:
+            item["Title"], item["Genre"] = clean_table(item["Title"],
+                                                       item["Genre"], item,
+                                                       table)
+            table_data.append([item["Title"], item["Genre"],
+                               item["imdbRating"], item["Runtime"],
+                               get_rotten_score(item), item["Year"]])
+        sort_table(table_data, 0, False)
+
+        if 'excel' in args.export:
+            export_type = args.export.index('excel')
+            filename = args.export[:export_type] + args.export[export_type + 1:]
+        elif 'csv' in args.export:
+            export_type = args.export.index('csv')
+            filename = args.export[:export_type] + args.export[export_type + 1:]
+            with open(str(filename[0]), 'w', newline='') as outputfile:
+                wr = csv.writer(outputfile, quoting=csv.QUOTE_ALL)
+                wr.writerows(table_data)
+        else:
+            print("Unsupported character.")
 
     else:
         table_data = [
