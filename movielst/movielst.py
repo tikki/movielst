@@ -244,6 +244,34 @@ def get_rotten_score(item):
         return "N/A"
 
 
+def get_table_everything(printout=False, return_item=False):
+    if printout:
+        table_data = [
+            ["TITLE", "GENRE", "IMDB", "RUNTIME", "TOMATO",
+             "YEAR"]]
+        data, table = butler(table_data)
+        for item in data:
+            item["Title"], item["Genre"] = clean_table(item["Title"],
+                                                       item["Genre"], item,
+                                                       table)
+            table_data.append([item["Title"], item["Genre"],
+                               item["imdbRating"], item["Runtime"],
+                               get_rotten_score(item), item["Year"]])
+    else:
+        table_data = [
+            ["TITLE", "GENRE", "IMDB", "RUNTIME", "TOMATO",
+             "YEAR", "AWARDS", "CAST", "DIRECTOR"]]
+        data, table = butler(table_data)
+        for item in data:
+            table_data.append([item["Title"], item["Genre"],
+                               item["imdbRating"], item["Runtime"],
+                               get_rotten_score(item), item["Year"], item["Awards"], item["Actors"], item["Director"]])
+    if return_item:
+        return table_data, item
+    else:
+        return table_data
+
+
 def sort_table(table_data, index, reverse):
     table_data = (table_data[:1] + sorted(table_data[1:],
                                           key=lambda i: i[index],
