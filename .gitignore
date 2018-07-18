@@ -67,3 +67,6 @@ target/
 
 #PyCharm IDE
 .idea/*
+
+#Folders
+tools/*
