@@ -191,7 +191,6 @@ def util(args):
             table_data.append([item["Title"], item["Genre"],
                                item["imdbRating"], item["Runtime"],
                                get_rotten_score(item), item["Year"]])
-        sort_table(table_data, 0, False)
 
         if 'excel' in args.export:
             export_type = args.export.index('excel')
