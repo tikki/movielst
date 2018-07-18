@@ -180,18 +180,7 @@ def util(args):
             table_data.append([item["Title"], get_rotten_score(item)])
         sort_table(table_data, 1, False)
     elif args.export:
-        table_data = [
-            ["TITLE", "GENRE", "IMDB", "RUNTIME", "TOMATO",
-             "YEAR"]]
-        data, table = butler(table_data)
-        for item in data:
-            item["Title"], item["Genre"] = clean_table(item["Title"],
-                                                       item["Genre"], item,
-                                                       table)
-            table_data.append([item["Title"], item["Genre"],
-                               item["imdbRating"], item["Runtime"],
-                               get_rotten_score(item), item["Year"]])
-
+        table_data = get_table_everything(return_item=True)
         if 'excel' in args.export:
             export_type = args.export.index('excel')
             filename = args.export[:export_type] + args.export[export_type + 1:]
@@ -199,16 +188,19 @@ def util(args):
             workbook = xlsxwriter.Workbook(filename[0])
             worksheet = workbook.add_worksheet()
             worksheet.set_row(0, None, workbook.add_format({'bold': True} ))
-            worksheet.autofilter(0, 0, len(item), 5)
+            worksheet.autofilter(0, 0, len(table_data[1]), 8)
             row = 0
             col = 0
-            for item in table_data:
+            for item in table_data[0]:
                 worksheet.write_string(row, col, item[0])
                 worksheet.write_string(row, col + 1, item[1])
                 worksheet.write_string(row, col + 2, item[2])
                 worksheet.write_string(row, col + 3, item[3])
                 worksheet.write_string(row, col + 4, item[4])
                 worksheet.write_string(row, col + 5, item[5])
+                worksheet.write_string(row, col + 6, item[6])
+                worksheet.write_string(row, col + 7, item[7])
+                worksheet.write_string(row, col + 8, item[8])
                 row += 1
 
             workbook.close()
@@ -218,23 +210,12 @@ def util(args):
             filename = args.export[:export_type] + args.export[export_type + 1:]
             with open(str(filename[0]), 'w', newline='') as outputfile:
                 wr = csv.writer(outputfile, quoting=csv.QUOTE_ALL)
-                wr.writerows(table_data)
+                wr.writerows(table_data[0])
         else:
             print("Unsupported character.")
 
     else:
-        table_data = [
-            ["TITLE", "GENRE", "IMDB", "RUNTIME", "TOMATO",
-             "YEAR"]]
-        data, table = butler(table_data)
-        for item in data:
-            item["Title"], item["Genre"] = clean_table(item["Title"],
-                                                       item["Genre"], item,
-                                                       table)
-            table_data.append([item["Title"], item["Genre"],
-                               item["imdbRating"], item["Runtime"],
-                               get_rotten_score(item), item["Year"]])
-        sort_table(table_data, 0, False)
+        sort_table(get_table_everything(printout=True), 0, False)
 
 
 def get_rotten_score(item):
