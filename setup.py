@@ -15,7 +15,8 @@ setup(name='movielst',
           'guessit',
           'terminaltables',
           'tqdm',
-          'colorama'
+          'colorama',
+          'xlsxwriter'
       ],
       keywords=['movies', 'CLI', 'movies-within-CLI', 'python'],
       classifiers=[
