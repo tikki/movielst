@@ -45,7 +45,7 @@ def main():
     parser.add_argument('-d', '--director', help='Show movie name with its director(s).', action='store_true')
     parser.add_argument('-y', '--year', help='Show movie name with its release date.', action='store_true')
     parser.add_argument('-r', '--runtime', help='Show movie name with its runtime.', action='store_true')
-    parser.add_argument('-e', '--export', help='Export list to either csv or excel', nargs=2)
+    parser.add_argument('-e', '--export', help='Export list to either csv or excel', nargs=2, metavar=('type', 'output'))
     parser.add_argument('-I', '--imdb-rev', help='Sort acc. to IMDB rating.(inc)', action='store_true')
     parser.add_argument('-T', '--tomato-rev', help='Sort acc. to Tomato Rotten rating.(inc)', action='store_true')
     util(parser.parse_args())
