@@ -10,6 +10,7 @@ import csv
 import xlsxwriter
 from .config import *
 from .omdb import *
+from .API import get_api
 from guessit import guessit
 from terminaltables import AsciiTable
 from urllib.parse import urlencode
@@ -91,93 +92,93 @@ def util(args):
         table_data = [["TITLE", "IMDB RATING"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"] = clean_table(item["Title"], None, item,
+            item["title"] = clean_table(item["title"], None, item,
                                         table)
-            table_data.append([item["Title"], item["imdbRating"]])
+            table_data.append([item["title"], item["imdb"]])
         sort_table(table_data, 1, True)
 
     elif args.tomato:
         table_data = [["TITLE", "TOMATO RATING"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"] = clean_table(item["Title"], None, item,
+            item["title"] = clean_table(item["title"], None, item,
                                         table)
-            table_data.append([item["Title"], get_rotten_score(item)])
+            table_data.append([item["title"], item["tomato"]])
         sort_table(table_data, 1, True)
 
     elif args.genre:
         table_data = [["TITLE", "GENRE"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"] = clean_table(item["Title"], None,
+            item["title"] = clean_table(item["title"], None,
                                         item, table)
-            table_data.append([item["Title"], item["Genre"]])
+            table_data.append([item["title"], item["genre"]])
         sort_table(table_data, 0, False)
 
     elif args.awards:
         table_data = [["TITLE", "AWARDS"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"], item["Awards"] = clean_table(item["Title"],
-                                                        item["Awards"], item,
+            item["title"], item["awards"] = clean_table(item["title"],
+                                                        item["awards"], item,
                                                         table)
-            table_data.append([item["Title"], item["Awards"]])
+            table_data.append([item["title"], item["awards"]])
         sort_table(table_data, 0, False)
 
     elif args.cast:
         table_data = [["TITLE", "CAST"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"], item["Actors"] = clean_table(item["Title"],
-                                                        item["Actors"], item,
+            item["title"], item["cast"] = clean_table(item["title"],
+                                                        item["cast"], item,
                                                         table)
-            table_data.append([item["Title"], item["Actors"]])
+            table_data.append([item["title"], item["cast"]])
         sort_table(table_data, 0, False)
 
     elif args.director:
         table_data = [["TITLE", "DIRECTOR(S)"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"], item["Director"] = clean_table(item["Title"],
-                                                          item["Director"],
+            item["title"], item["director"] = clean_table(item["title"],
+                                                          item["director"],
                                                           item, table)
-            table_data.append([item["Title"], item["Director"]])
+            table_data.append([item["title"], item["director"]])
         sort_table(table_data, 0, False)
 
     elif args.year:
         table_data = [["TITLE", "RELEASED"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"] = clean_table(item["Title"], None, item,
+            item["title"] = clean_table(item["title"], None, item,
                                         table)
-            table_data.append([item["Title"], item["Released"]])
+            table_data.append([item["title"], item["year"]])
         sort_table(table_data, 0, False)
 
     elif args.runtime:  # Sort result by handling numeric sort
         table_data = [["TITLE", "RUNTIME"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"] = clean_table(item["Title"], None, item,
+            item["title"] = clean_table(item["title"], None, item,
                                         table)
-            table_data.append([item["Title"], item["Runtime"]])
+            table_data.append([item["title"], item["runtime"]])
         print_table(table_data)
 
     elif args.imdb_rev:
         table_data = [["TITLE", "IMDB RATING"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"] = clean_table(item["Title"], None, item,
+            item["title"] = clean_table(item["title"], None, item,
                                         table)
-            table_data.append([item["Title"], item["imdbRating"]])
+            table_data.append([item["title"], item["imdb"]])
         sort_table(table_data, 1, False)
 
     elif args.tomato_rev:
         table_data = [["TITLE", "TOMATO RATING"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"] = clean_table(item["Title"], None, item,
+            item["title"] = clean_table(item["title"], None, item,
                                         table)
-            table_data.append([item["Title"], get_rotten_score(item)])
+            table_data.append([item["title"], item["tomato"]])
         sort_table(table_data, 1, False)
     elif args.export:
         table_data = get_table_everything(return_item=True)
@@ -232,21 +233,21 @@ def get_table_everything(printout=False, return_item=False):
              "YEAR"]]
         data, table = butler(table_data)
         for item in data:
-            item["Title"], item["Genre"] = clean_table(item["Title"],
-                                                       item["Genre"], item,
+            item["title"], item["genre"] = clean_table(item["title"],
+                                                       item["genre"], item,
                                                        table)
-            table_data.append([item["Title"], item["Genre"],
-                               item["imdbRating"], item["Runtime"],
-                               get_rotten_score(item), item["Year"]])
+            table_data.append([item["title"], item["genre"],
+                               item["imdb"], item["runtime"],
+                               item["tomato"], item["year"]])
     else:
         table_data = [
             ["TITLE", "GENRE", "IMDB", "RUNTIME", "TOMATO",
              "YEAR", "AWARDS", "CAST", "DIRECTOR"]]
         data, table = butler(table_data)
         for item in data:
-            table_data.append([item["Title"], item["Genre"],
-                               item["imdbRating"], item["Runtime"],
-                               get_rotten_score(item), item["Year"], item["Awards"], item["Actors"], item["Director"]])
+            table_data.append([item["title"], item["genre"],
+                               item["imdb"], item["runtime"],
+                               item["tomato"], item["year"], item["awards"], item["cast"], item["director"]])
     if return_item:
         return table_data, item
     else:
@@ -329,7 +330,7 @@ def scan_dir(path, dir_json):
         for name in movie_name:
             data = get_movie_info(name)
             pbar.update()
-            if data is not None and data['Response'] == 'True':
+            if data is not None:
                 for key, val in data.items():
                     if val == "N/A":
                         data[key] = "-"  # Should N/A be replaced with `-`?
@@ -346,9 +347,9 @@ def get_movie_info(name):
     movie_info = guessit(name)
     if movie_info['type'] == "movie":
         if 'year' in movie_info:
-            return get_omdb_movie(movie_info['title'], movie_info['year'])
+            return get_api(movie_info['title'], movie_info['year'], external_api=get_setting('API', 'use_external_api'))
         else:
-            return get_omdb_movie(movie_info['title'], None)
+            return get_api(movie_info['title'], None, external_api=get_setting('API', 'use_external_api'))
     else:
         not_a_movie.append(name)
 
