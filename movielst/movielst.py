@@ -323,7 +323,7 @@ def scan_dir(path, dir_json):
         for name in movie_name:
             data = get_movie_info(name)
             pbar.update()
-            if data is not None:
+            if data is not None and data['response'] == 'True':
                 for key, val in data.items():
                     if val == "N/A":
                         data[key] = "-"  # Should N/A be replaced with `-`?
