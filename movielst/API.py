@@ -50,7 +50,10 @@ def get_api(title, year, external_api="omdb"):
 
 
 def get_rotten_score(item):
-    if item['Ratings'][1]['Source'] == "Rotten Tomatoes":
-        return item['Ratings'][1]['Value']
-    else:
+    try:
+        if item['Ratings'][1]['Source'] == "Rotten Tomatoes":
+            return item['Ratings'][1]['Value']
+        else:
+            return "N/A"
+    except IndexError:
         return "N/A"
