@@ -15,7 +15,9 @@ def create_config():
         config.add_section('API')
 
         config.set('Index', 'location', CONFIG_PATH + 'movies.json')
+        config.set('API', 'use_external_api', 'omdb')
         config.set('API', 'OMDb_API_key', '37835d63')
+        config.set('API', 'TMdb_API_key', '')
 
         with open(CONFIG_PATH + CONFIG_FILE, 'w') as config_file:
             config.write(config_file)
