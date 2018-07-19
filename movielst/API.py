@@ -12,20 +12,25 @@ def get_api(title, year, external_api="omdb"):
         "year": None,
         "awards": None,
         "cast": None,
-        "director": None
+        "director": None,
+        "response": False
     }
     if external_api == "omdb":
         omdb = get_omdb_movie(title, year)
+        if omdb['Response'] == 'True':
+            item["title"] = omdb["Title"]
+            item["genre"] = omdb["Genre"]
+            item["imdb"] = omdb["imdbRating"]
+            item["runtime"] = omdb["Runtime"]
+            item["tomato"] = get_rotten_score(omdb)
+            item["year"] = omdb["Year"]
+            item["awards"] = omdb["Awards"]
+            item["cast"] = omdb["Actors"]
+            item["director"] = omdb["Director"]
+            item['response'] = omdb["Response"]
+        else:
+            item['response'] = omdb["Response"]
 
-        item["title"] = omdb["Title"]
-        item["genre"] = omdb["Genre"]
-        item["imdb"] = omdb["imdbRating"]
-        item["runtime"] = omdb["Runtime"]
-        item["tomato"] = get_rotten_score(omdb)
-        item["year"] = omdb["Year"]
-        item["awards"] = omdb["Awards"]
-        item["cast"] = omdb["Actors"]
-        item["director"] = omdb["Director"]
     elif external_api == "tmdb":
         tmdb = get_tmdb_movie(title, year)
         item["title"] = tmdb["results"][0]['title']
