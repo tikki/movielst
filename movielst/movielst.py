@@ -219,13 +219,6 @@ def util(args):
         sort_table(get_table_everything(printout=True), 0, False)
 
 
-def get_rotten_score(item):
-    if item['Ratings'][1]['Source'] == "Rotten Tomatoes":
-        return item['Ratings'][1]['Value']
-    else:
-        return "N/A"
-
-
 def get_table_everything(printout=False, return_item=False):
     if printout:
         table_data = [
