@@ -1,0 +1,10 @@
+.block {
+    position: relative;
+    display: inline-block;
+    float: right;
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    background-size: 150px 150px;
+    background-repeat: no-repeat;
+}
