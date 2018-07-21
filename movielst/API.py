@@ -18,7 +18,7 @@ def get_api(title, year, external_api="omdb"):
     }
     if external_api == "omdb":
         omdb = get_omdb_movie(title, year)
-        if omdb['Response'] == 'True':
+        if omdb is not None and omdb['Response'] == 'True':
             item["title"] = omdb["Title"]
             item["genre"] = omdb["Genre"]
             item["imdb"] = omdb["imdbRating"]
@@ -31,11 +31,11 @@ def get_api(title, year, external_api="omdb"):
             item["poster"] = omdb["Poster"]
             item['response'] = omdb["Response"]
         else:
-            item['response'] = omdb["Response"]
+            item['response'] = 'False'
 
     elif external_api == "tmdb":
         tmdb = get_tmdb_movie(title, year)
-        if tmdb["results"]:
+        if tmdb is not None and tmdb["results"]:
             item["title"] = tmdb["results"][0]['title']
             item["year"] = tmdb["results"][0]['release_date'].split('-', 1)[0]
 
