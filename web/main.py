@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 import json
 from movielst import config
 
@@ -33,6 +33,11 @@ def movie(variable):
         i+=1
     print(list)
     return render_template('movie.html', list=list)
+
+
+@app.route('/movie/play/<variable>')
+def play(variable):
+    return send_from_directory('/', variable)
 
 
 if __name__ == '__main__':
