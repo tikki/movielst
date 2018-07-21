@@ -1,7 +1,5 @@
 
-import os
 import textwrap
-import requests
 import json
 import argparse
 import pkg_resources
@@ -9,11 +7,9 @@ import hashlib
 import csv
 import xlsxwriter
 from .config import *
-from .omdb import *
 from .API import get_api
 from guessit import guessit
 from terminaltables import AsciiTable
-from urllib.parse import urlencode
 from tqdm import tqdm
 from colorama import init, Fore
 
