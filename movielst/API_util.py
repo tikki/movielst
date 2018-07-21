@@ -15,6 +15,9 @@ def make_request(url, params, title):
         else:
             print("Couldn't find the movie " + title)
             return None
+    elif r.status_code == 401:
+        print("Invalid API key, please check config file.")
+        return None
     else:
         print("There was some error fetching info from " + url)
         return None
