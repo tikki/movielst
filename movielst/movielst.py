@@ -30,7 +30,6 @@ EXT = (".3g2 .3gp .3gp2 .3gpp .60d .ajp .asf .asx .avchd .avi .bik .bix"
 EXT = tuple(EXT.split())
 
 
-
 def main():
 
     create_config()
@@ -50,6 +49,7 @@ def main():
     parser.add_argument('-I', '--imdb-rev', help='Sort acc. to IMDB rating.(inc)', action='store_true')
     parser.add_argument('-T', '--tomato-rev', help='Sort acc. to Tomato Rotten rating.(inc)', action='store_true')
     util(parser.parse_args())
+
 
 def get_version():
     try:
@@ -130,8 +130,8 @@ def util(args):
         data, table = butler(table_data)
         for item in data:
             item["title"], item["cast"] = clean_table(item["title"],
-                                                        item["cast"], item,
-                                                        table)
+                                                      item["cast"],
+                                                      item, table)
             table_data.append([item["title"], item["cast"]])
         sort_table(table_data, 0, False)
 
@@ -188,7 +188,7 @@ def util(args):
 
             workbook = xlsxwriter.Workbook(filename[0])
             worksheet = workbook.add_worksheet()
-            worksheet.set_row(0, None, workbook.add_format({'bold': True} ))
+            worksheet.set_row(0, None, workbook.add_format({'bold': True}))
             worksheet.autofilter(0, 0, len(table_data[1]), 8)
             row = 0
             col = 0

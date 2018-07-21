@@ -30,7 +30,7 @@ def movie(variable):
             list["awards"] = datas["awards"]
             list["cast"] = datas["cast"]
             list["director"] = datas["director"]
-        i+=1
+        i += 1
     print(list)
     return render_template('movie.html', list=list)
 
