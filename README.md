@@ -2,7 +2,7 @@
 
 movielst is based on [moviemon](https://github.com/iCHAIT/moviemon) , a Python application that displays information about all your movies in the command line.
 movielst will index movies in a selected directory, retrieve and display information like IMDb rating, release date, top casts and more.
-This fork is intended to update the project to latest python version, fix existing issues from the orignal project and add new features.
+This fork is intended to update the project to latest python version, fix existing issues from the original project and add new features.
 
 ![](https://i.imgur.com/Lb8qCXa.gif)
 
