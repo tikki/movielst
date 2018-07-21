@@ -35,18 +35,23 @@ def get_api(title, year, external_api="omdb"):
 
     elif external_api == "tmdb":
         tmdb = get_tmdb_movie(title, year)
-        item["title"] = tmdb["results"][0]['title']
-        item["year"] = tmdb["results"][0]['release_date'].split('-', 1)[0]
+        if tmdb["results"]:
+            item["title"] = tmdb["results"][0]['title']
+            item["year"] = tmdb["results"][0]['release_date'].split('-', 1)[0]
 
-        item["genre"] = "unsupported"
-        item["imdb"] = "unsupported"
-        item["runtime"] = "unsupported"
-        item["tomato"] = "unsupported"
-        item["awards"] = "unsupported"
-        item["cast"] = "unsupported"
-        item["director"] = "unsupported"
+            item["genre"] = "unsupported"
+            item["imdb"] = "unsupported"
+            item["runtime"] = "unsupported"
+            item["tomato"] = "unsupported"
+            item["awards"] = "unsupported"
+            item["cast"] = "unsupported"
+            item["director"] = "unsupported"
+            item["poster"] = "unsupported"
 
-        genre_ids = tmdb["results"][0]['genre_ids']
+            genre_ids = tmdb["results"][0]['genre_ids']
+            item['response'] = 'True'
+        elif not tmdb["results"]:
+            item['response'] = 'False'
 
     return item
 
