@@ -5,6 +5,11 @@ This fork is intended to update the project to latest python version, fix existi
 
 ![](https://i.imgur.com/Lb8qCXa.gif)
 
+## Features
+* Export to csv and xlsx file
+* Use either OMDb(default) or TMDb API to retrieve movie information
+
+
 ## Installation
 
 ### Install from source
