@@ -11,9 +11,12 @@ def create_config():
 
         config = configparser.ConfigParser()
 
+        config.add_section('General')
         config.add_section('Index')
         config.add_section('API')
 
+        config.set('General', 'log_level', 'INFO')
+        config.set('General', 'log_location', CONFIG_PATH)
         config.set('Index', 'location', CONFIG_PATH + 'movies.json')
         config.set('API', 'use_external_api', 'omdb')
         config.set('API', 'OMDb_API_key', '37835d63')

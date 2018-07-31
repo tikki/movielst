@@ -6,6 +6,8 @@ import pkg_resources
 import hashlib
 import csv
 import xlsxwriter
+import logging
+import logging.config
 from .config import *
 from .API import get_api
 from guessit import guessit
@@ -24,11 +26,41 @@ EXT = (".3g2 .3gp .3gp2 .3gpp .60d .ajp .asf .asx .avchd .avi .bik .bix"
        ".wrap .wvx .wx .x264 .xvid")
 
 EXT = tuple(EXT.split())
+logger = logging.getLogger(__name__)
 
 
 def main():
 
     create_config()
+    logging.config.dictConfig({
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+          'standard': {
+              'format': '%(asctime)s - %(levelname)s - %(name)-12s/%(funcName)s():%(lineno)d - %(message)s'
+          },
+        },
+        'handlers': {
+            'rotate_file': {
+                'level': get_setting('General', 'log_level'),
+                'formatter': 'standard',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'filename': get_setting('General', 'log_location') + 'movielst.log',
+                'encoding': 'utf8',
+                'maxBytes': 10*1024*1024,
+                'backupCount': 1,
+            }
+        },
+        'loggers': {
+            '': {
+                'handlers': ['rotate_file'],
+                'level': get_setting('General', 'log_level'),
+                'propagate': True
+            }
+        }
+    })
+
+    logger.debug("TESTING!")
 
     parser = argparse.ArgumentParser()
     parser.add_argument('PATH', nargs='?', default='')
@@ -60,6 +92,7 @@ def util(args):
 
             print("\n\nIndexing all movies inside ",
                   args.PATH + "\n\n")
+            logger.info('Started new index at: ' + args.PATH)
 
             dir_json = get_setting('Index', 'location')
 
@@ -80,9 +113,11 @@ def util(args):
             else:
                 print(Fore.RED + "\n\nGiven directory does not contain movies."
                       " Pass a directory containing movies\n\n")
+                logger.warning('Could not find movies in given directory: ' + args.PATH)
         else:
             print(Fore.RED + "\n\nDirectory does not exists."
                   " Please pass a valid directory containing movies.\n\n")
+            logger.warning('Directory does not exists.')
 
     elif args.imdb:
         table_data = [["TITLE", "IMDB RATING"]]
@@ -210,6 +245,7 @@ def util(args):
                 wr.writerows(table_data[0])
         else:
             print("Unsupported character.")
+            logger.warning('Used something else than supported arguments for exporting.')
 
     else:
         sort_table(get_table_everything(printout=True), 0, False)
@@ -275,6 +311,7 @@ def butler(table_data):
     except IOError:
         print(Fore.RED, "\n\nRun `$movielst PATH` to "
               "index your movies directory.\n\n")
+        logger.error('Movie index could not be found, please index before use.')
         quit()
     else:
         table = AsciiTable(table_data)
@@ -285,6 +322,7 @@ def butler(table_data):
         except IOError:
             print(Fore.YELLOW, "\n\nRun `movielst PATH` to "
                   "index your movies directory.\n\n")
+            logger.error('Movie index could not be found, please index before use.')
             quit()
 
 
