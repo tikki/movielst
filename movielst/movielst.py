@@ -305,6 +305,7 @@ movie_not_found = []
 
 
 def scan_dir(path, dir_json):
+    original_path = path
     # Preprocess the total files count
     for root, dirs, files in tqdm(os.walk(path)):
         for name in files:
@@ -323,7 +324,9 @@ def scan_dir(path, dir_json):
                 for key, val in data.items():
                     if val == "N/A":
                         data[key] = "-"  # Should N/A be replaced with `-`?
+                data.update({"file_info": {"name": name, "location": original_path, "extension": ext}})
                 movies.append(data)
+
             else:
                 if data is not None:
                     movie_not_found.append(name)
