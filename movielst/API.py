@@ -1,5 +1,5 @@
 from .omdb import get_omdb_movie
-from .tmdb import get_tmdb_movie, get_tmdb_genre
+from .tmdb import get_tmdb_movie, get_tmdb_genre, get_tmdb_details
 
 
 def get_api(title, year, external_api="omdb"):
