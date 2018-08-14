@@ -1,5 +1,5 @@
 from .omdb import get_omdb_movie
-from .tmdb import get_tmdb_movie
+from .tmdb import get_tmdb_movie, get_tmdb_genre
 
 
 def get_api(title, year, external_api="omdb"):
@@ -39,7 +39,7 @@ def get_api(title, year, external_api="omdb"):
             item["title"] = tmdb["results"][0]['title']
             item["year"] = tmdb["results"][0]['release_date'].split('-', 1)[0]
 
-            item["genre"] = "unsupported"
+            item["genre"] = get_tmdb_genre(tmdb["results"][0]['genre_ids'])
             item["imdb"] = "unsupported"
             item["runtime"] = "unsupported"
             item["tomato"] = "unsupported"
@@ -47,8 +47,6 @@ def get_api(title, year, external_api="omdb"):
             item["cast"] = "unsupported"
             item["director"] = "unsupported"
             item["poster"] = "unsupported"
-
-            genre_ids = tmdb["results"][0]['genre_ids']
             item['response'] = 'True'
         elif not tmdb["results"]:
             item['response'] = 'False'
