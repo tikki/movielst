@@ -1,4 +1,4 @@
-# movielst [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+# movielst [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![PyPI version](https://badge.fury.io/py/movielst.svg)](https://badge.fury.io/py/movielst)
 
 movielst is based on [moviemon](https://github.com/iCHAIT/moviemon) , a Python application that displays information about all your movies in the command line.
 movielst will index movies in a selected directory, retrieve and display information like IMDb rating, release date, top casts and more.
@@ -12,13 +12,13 @@ This fork is intended to update the project to latest python version, fix existi
 
 
 ## Installation
+#### Install latest stable with pip
+`pip install movielst`
+#### Install from source with pip
+`pip install git+git://github.com/Mozzo1000/movielst.git`
 
-### Install from source
 
-* Install with pip `pip install git+git://github.com/Mozzo1000/movielst.git`
-
-
-### Dependencies
+## Dependencies
 
 * [guessit](https://github.com/guessit-io/guessit) - Retrieving correct movie name from files.
 * [terminaltables](https://github.com/Robpol86/terminaltables) - Printing out tables nicely.
@@ -27,7 +27,7 @@ This fork is intended to update the project to latest python version, fix existi
 * [XlsxWriter](https://github.com/jmcnamara/XlsxWriter) - Exporting table to excel.
 
 
-### Usage:
+## Usage:
 ```sh
   movielst PATH
   movielst [-i | -t | -g | -a | -c | -d | -y | -r | [-e type output] | -I | -T ]
@@ -54,13 +54,13 @@ This fork is intended to update the project to latest python version, fix existi
   -T, --tomato-rev      Sort acc. to Tomato Rotten rating.(inc)
 ```
 
-### Credits
+## Credits
 [iCHAIT](https://github.com/iCHAIT) - Original developer
 
-### Contribute
+## Contribute
 
 Found a bug or want to suggest a new feature? Report it by opening an issue. Feel free to send a pull request for any improvements or feature requests ;)
 
 
-### License
+## License
 `movielst` is released under the [MIT License](http://www.opensource.org/licenses/MIT).
