@@ -14,6 +14,12 @@ def get_tmdb_movie(title, year):
     return make_request(tmdb_url, params, title)
 
 
+def get_tmdb_details(id):
+    tmdb_url = 'https://api.themoviedb.org/3/movie/' + str(id) + '?api_key=' + get_setting('API', 'TMdb_API_key') + '&'
+    params = {'language': 'en-US'}
+    return make_request(tmdb_url, params, 0)
+
+
 def get_tmdb_genre(ids):
     if not os.path.exists(get_setting('Index', 'location') + 'tmdb_genre_list.json'):
         tmdb_url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + get_setting('API', 'TMdb_API_key')
