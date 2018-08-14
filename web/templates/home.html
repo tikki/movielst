@@ -3,11 +3,14 @@
 {% block body %}
     <section id="row">
         {% for movie in movie_list %}
-            <a href="/movie/{{ movie["title"] }}">
-                <div class="block" style="background-image: url( {{ movie["poster"] }} );">
-                    <p>{{ movie["title"] }}</p>
+            <div class="responsive">
+                <div class="gallery">
+                    <a href="/movie/{{ movie["title"] }} ">
+                        <img src="{{ movie["poster"] }}">
+                    </a>
+                    <div class="desc">{{ movie["title"] }}</div>
                 </div>
-                </a>
+            </div>
       {% endfor %}
     </section>
 {% endblock %}
