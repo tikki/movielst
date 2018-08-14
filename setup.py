@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='movielst',
-      version='2.0.0',
+      version='2.1.0',
       description='Everything about your movies within the command line.',
       url='https://github.com/Mozzo1000/movielst',
       author='Andreas Backström',
