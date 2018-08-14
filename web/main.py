@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    with open(config.get_setting('Index', 'location'), 'r') as file:
+    with open(config.get_setting('Index', 'location') + 'movies.json', 'r') as file:
         data = json.loads(file.read())
 
     return render_template('home.html', movie_list=data)
@@ -15,7 +15,7 @@ def index():
 
 @app.route('/movie/<variable>')
 def movie(variable):
-    with open(config.get_setting('Index', 'location'), 'r') as file:
+    with open(config.get_setting('Index', 'location') + 'movies.json', 'r') as file:
         data = json.loads(file.read())
     i = 0
     list = {}
