@@ -94,8 +94,8 @@ def util(args):
                   args.PATH + "\n\n")
             logger.info('Started new index at: ' + args.PATH)
 
-            dir_json = get_setting('Index', 'location')
-
+            dir_json = get_setting('Index', 'location') + 'movies.json'
+            print(dir_json)
             scan_dir(args.PATH, dir_json)
 
             if movie_name:
@@ -307,7 +307,7 @@ def clean_table(tag1, tag2, item, table):
 
 def butler(table_data):
     try:
-        movie_path = get_setting('Index', 'location')
+        movie_path = get_setting('Index', 'location') + 'movies.json'
     except IOError:
         print(Fore.RED, "\n\nRun `$movielst PATH` to "
               "index your movies directory.\n\n")
