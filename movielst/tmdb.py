@@ -24,7 +24,6 @@ def get_tmdb_genre(ids):
     if not os.path.exists(get_setting('Index', 'location') + 'tmdb_genre_list.json'):
         tmdb_url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + get_setting('API', 'TMdb_API_key')
         genre_json = make_request(tmdb_url, {}, 0)
-        print(tmdb_url)
         with open(get_setting('Index', 'location') + 'tmdb_genre_list.json', "w") as out:
             json.dump(genre_json, out, indent=2)
 
