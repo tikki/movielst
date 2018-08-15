@@ -1,9 +1,10 @@
 from flask import Flask, render_template, send_from_directory
 import json
 from movielst import config
+from forms import SettingsForm
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'not really secret but still a really useless secret key for this use case'
 
 @app.route('/')
 def index():
@@ -33,6 +34,17 @@ def movie(variable):
         i += 1
     print(list)
     return render_template('movie.html', list=list)
+
+
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    conf = config.get_setting('API', 'OMDb_API_key')
+    print(conf)
+    form = SettingsForm()
+    if form.validate_on_submit():
+        print(form.omdb_api_key_field.data)
+        config.update_config('API', 'OMDb_API_key', form.omdb_api_key_field.data)
+    return render_template('settings.html', config=conf, form=form)
 
 
 @app.route('/movie/play/<variable>')
