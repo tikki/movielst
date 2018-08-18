@@ -9,8 +9,7 @@ setup(name='movielst',
       license='MIT',
       packages=['movielst', 'web'],
       entry_points={
-                'console_scripts': ['movielst=movielst:main'],
-                'console_scripts': ['movielst_web=web.main:main'],
+                'console_scripts': ['movielst=movielst:main', 'movielst_web=web.main:main']
            },
       install_requires=[
           'guessit',
