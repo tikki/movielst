@@ -16,7 +16,9 @@ setup(name='movielst',
           'terminaltables',
           'tqdm',
           'colorama',
-          'xlsxwriter'
+          'xlsxwriter',
+          'flask',
+          'Flask-WTF'
       ],
       keywords=['movies', 'CLI', 'movies-within-CLI', 'python'],
       classifiers=[
