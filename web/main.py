@@ -43,13 +43,23 @@ def movie(variable):
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    conf = config.get_setting('API', 'OMDb_API_key')
-    print(conf)
     form = SettingsForm()
+    form.log_level_field.default = config.get_setting('General', 'log_level')
+    form.log_location_field.default = config.get_setting('General', 'log_location')
+    form.location_field.default = config.get_setting('Index', 'location')
+    form.use_external_api_field.default = config.get_setting('API', 'use_external_api')
+    form.omdb_api_key_field.default = config.get_setting('API', 'OMDb_API_key')
+    form.tmdb_api_key_field.default = config.get_setting('API', 'TMdb_API_key')
     if form.validate_on_submit():
         print(form.omdb_api_key_field.data)
+        config.update_config('General', 'log_level', form.log_level_field.data)
+        config.update_config('General', 'log_location', form.log_location_field.data)
+        config.update_config('Index', 'location', form.location_field.data)
+        config.update_config('API', 'use_external_api', form.use_external_api_field.data)
         config.update_config('API', 'OMDb_API_key', form.omdb_api_key_field.data)
-    return render_template('settings.html', config=conf, form=form)
+        config.update_config('API', 'TMdb_API_key', form.tmdb_api_key_field.data)
+    form.process()
+    return render_template('settings.html', form=form)
 
 
 @app.route('/movie/play/<variable>')
