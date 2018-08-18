@@ -96,7 +96,6 @@ def util(args):
             logger.info('Started new index at: ' + args.PATH)
 
             dir_json = get_setting('Index', 'location') + 'movies.json'
-            print(dir_json)
             scan_dir(args.PATH, dir_json)
 
             if movie_name:
