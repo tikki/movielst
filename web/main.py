@@ -37,7 +37,6 @@ def movie(variable):
             list["cast"] = datas["cast"]
             list["director"] = datas["director"]
         i += 1
-    print(list)
     return render_template('movie.html', list=list)
 
 
@@ -51,7 +50,6 @@ def settings():
     form.omdb_api_key_field.default = config.get_setting('API', 'OMDb_API_key')
     form.tmdb_api_key_field.default = config.get_setting('API', 'TMdb_API_key')
     if form.validate_on_submit():
-        print(form.omdb_api_key_field.data)
         config.update_config('General', 'log_level', form.log_level_field.data)
         config.update_config('General', 'log_location', form.log_location_field.data)
         config.update_config('Index', 'location', form.location_field.data)
