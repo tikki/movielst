@@ -7,9 +7,10 @@ setup(name='movielst',
       author='Andreas Backström',
       author_email='andreas@simplymozzo.se',
       license='MIT',
-      packages=['movielst'],
+      packages=['movielst', 'web'],
       entry_points={
-               'console_scripts': ['movielst=movielst:main'],
+                'console_scripts': ['movielst=movielst:main'],
+                'console_scripts': ['movielst_web=web.main:main'],
            },
       install_requires=[
           'guessit',

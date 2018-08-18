@@ -1,10 +1,15 @@
 from flask import Flask, render_template, send_from_directory
 import json
 from movielst import config
-from forms import SettingsForm
+from web.forms import SettingsForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'not really secret but still a really useless secret key for this use case'
+
+
+def main():
+    app.run(debug=False)
+
 
 @app.route('/')
 def index():
@@ -53,4 +58,4 @@ def play(variable):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    main()
