@@ -10,6 +10,7 @@ import logging
 import logging.config
 from .config import *
 from .API import get_api
+from .database import *
 from guessit import guessit
 from terminaltables import AsciiTable
 from tqdm import tqdm
@@ -30,8 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-
     create_config()
+    create_movie_table()
     logging.config.dictConfig({
         'version': 1,
         'disable_existing_loggers': False,
@@ -364,6 +365,7 @@ def scan_dir(path, dir_json):
                         data[key] = "-"  # Should N/A be replaced with `-`?
                 data.update({"file_info": {"name": name, "location": original_path, "extension": ext}})
                 movies.append(data)
+                add_movie(data)
 
             else:
                 if data is not None:
