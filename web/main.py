@@ -1,6 +1,6 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, send_file
 import json
-from movielst import config
+from movielst import config, database
 from web.forms import SettingsForm
 
 app = Flask(__name__)
@@ -58,6 +58,17 @@ def settings():
         config.update_config('API', 'TMdb_API_key', form.tmdb_api_key_field.data)
     form.process()
     return render_template('settings.html', form=form)
+
+
+@app.route('/export/<type>/<name>')
+def export(type, name):
+    if type == 'csv':
+        database.export_to_csv(config.CONFIG_PATH + name)
+        return send_file(config.CONFIG_PATH + name, as_attachment=True)
+    elif type == 'xlsx':
+        return "Export xlsx"
+    else:
+        return "File type not supported"
 
 
 @app.route('/movie/play/<variable>')
