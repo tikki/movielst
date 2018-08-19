@@ -66,7 +66,8 @@ def export(type, name):
         database.export_to_csv(config.CONFIG_PATH + name)
         return send_file(config.CONFIG_PATH + name, as_attachment=True)
     elif type == 'xlsx':
-        return "Export xlsx"
+        database.export_to_xlsx(config.CONFIG_PATH + name)
+        return send_file(config.CONFIG_PATH + name, as_attachment=True)
     else:
         return "File type not supported"
 
