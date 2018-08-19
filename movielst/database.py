@@ -1,5 +1,6 @@
 import sqlite3
 import csv
+import xlsxwriter
 from .config import *
 
 
@@ -47,3 +48,15 @@ def export_to_csv(output):
         for row in cur.execute('SELECT * FROM movies'):
             writer.writerow(row)
 
+
+def export_to_xlsx(output):
+    workbook = xlsxwriter.Workbook(output)
+    worksheet = workbook.add_worksheet()
+
+    con = connect_db()
+    cur = con.cursor()
+
+    for i, row in enumerate(cur.execute('SELECT * FROM movies')):
+        for j, value in enumerate(row):
+            worksheet.write(i, j, value)
+    workbook.close()
