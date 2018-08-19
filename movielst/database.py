@@ -1,4 +1,5 @@
 import sqlite3
+import csv
 from .config import *
 
 
@@ -36,4 +37,13 @@ def add_movie(data):
                       data['poster'], data['response'], data['file_info']['name'],
                       data['file_info']['location'], data['file_info']['extension']))
     con.commit()
+
+
+def export_to_csv(output):
+    con = connect_db()
+    cur = con.cursor()
+    with open(output, 'w') as output_file:
+        writer = csv.writer(output_file, delimiter=',')
+        for row in cur.execute('SELECT * FROM movies'):
+            writer.writerow(row)
 
