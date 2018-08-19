@@ -8,6 +8,8 @@ import csv
 import xlsxwriter
 import logging
 import logging.config
+import platform
+import subprocess
 from .config import *
 from .API import get_api
 from .database import *
@@ -77,6 +79,7 @@ def main():
     parser.add_argument('-e', '--export', help='Export list to either csv or excel', nargs=2, metavar=('type', 'output'))
     parser.add_argument('-I', '--imdb-rev', help='Sort acc. to IMDB rating.(inc)', action='store_true')
     parser.add_argument('-T', '--tomato-rev', help='Sort acc. to Tomato Rotten rating.(inc)', action='store_true')
+    parser.add_argument('-ec', '--edit-config', help='Open the configuration file in the default editor', action='store_true')
     util(parser.parse_args())
 
 
@@ -246,6 +249,15 @@ def util(args):
         else:
             print("Unsupported character.")
             logger.warning('Used something else than supported arguments for exporting.')
+    elif args.edit_config:
+        if platform.system() == 'Darwin':
+            subprocess.call(('open', CONFIG_PATH + CONFIG_FILE))
+        elif platform.system() == 'Linux':
+            subprocess.call(('xdg-open', CONFIG_PATH + CONFIG_FILE))
+        elif platform.system() == 'Windows':
+            subprocess.call(('start', CONFIG_PATH + CONFIG_FILE), shell=True)
+        else:
+            print("Can not open the configuration file. System not supported.")
 
     else:
         sort_table(get_table_everything(printout=True), 0, False)
