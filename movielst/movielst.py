@@ -319,7 +319,7 @@ def clean_table(tag1, tag2, item, table):
 
 def butler(table_data):
     try:
-        movie_path = get_setting('Index', 'location') + 'movies.json'
+        movie_path = get_setting('Index', 'location') + 'movies.db'
     except IOError:
         print(Fore.RED, "\n\nRun `$movielst PATH` to "
               "index your movies directory.\n\n")
@@ -328,8 +328,7 @@ def butler(table_data):
     else:
         table = AsciiTable(table_data)
         try:
-            with open(movie_path) as inp:
-                data = json.load(inp)
+            data = db_to_json()
             return data, table
         except IOError:
             print(Fore.YELLOW, "\n\nRun `movielst PATH` to "
@@ -375,14 +374,12 @@ def scan_dir(path, dir_json):
                     if val == "N/A":
                         data[key] = "-"  # Should N/A be replaced with `-`?
                 data.update({"file_info": {"name": name, "location": original_path, "extension": ext}})
-                movies.append(data)
+                movies = db_to_json()
                 add_movie(data)
 
             else:
                 if data is not None:
                     movie_not_found.append(name)
-        with open(dir_json, "w") as out:
-            json.dump(movies, out, indent=2)
 
 
 def get_movie_info(name):

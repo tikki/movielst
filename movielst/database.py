@@ -60,3 +60,15 @@ def export_to_xlsx(output):
         for j, value in enumerate(row):
             worksheet.write(i, j, value)
     workbook.close()
+
+
+def db_to_json():
+    con = connect_db()
+    cur = con.cursor()
+    result = cur.execute('SELECT * FROM movies')
+    items = []
+    for row in result:
+        items.append({'title': row[0], 'genre': row[1], 'imdb': row[2], 'runtime': row[3], 'tomato': row[4],
+                      'year': row[5], 'awards': row[6], 'cast': row[7], 'director': row[8], 'poster': row[9],
+                      'response': row[10], 'file_info': {'name': row[11], 'location': row[12], 'extension': row[13]}})
+    return items

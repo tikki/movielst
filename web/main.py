@@ -13,16 +13,14 @@ def main():
 
 @app.route('/')
 def index():
-    with open(config.get_setting('Index', 'location') + 'movies.json', 'r') as file:
-        data = json.loads(file.read())
+    data = database.db_to_json()
 
     return render_template('home.html', movie_list=data)
 
 
 @app.route('/movie/<variable>')
 def movie(variable):
-    with open(config.get_setting('Index', 'location') + 'movies.json', 'r') as file:
-        data = json.loads(file.read())
+    data = database.db_to_json()
     i = 0
     list = {}
     for datas in data:
