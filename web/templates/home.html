@@ -6,7 +6,7 @@
             <div class="responsive">
                 <div class="gallery">
                     <a href="/movie/{{ movie["title"] }} ">
-                        <img src="{{ movie["poster"] }}">
+                        <img src="{{ movie["poster"] }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
                     </a>
                     <div class="desc">{{ movie["title"] }}</div>
                 </div>
