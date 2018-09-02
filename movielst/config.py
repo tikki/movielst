@@ -8,7 +8,7 @@ CONFIG_FILE = os.path.expanduser('config.ini')
 def create_config():
     if not os.path.exists(CONFIG_PATH):
         os.makedirs(CONFIG_PATH)
-
+    if not os.path.exists(CONFIG_PATH + CONFIG_FILE):
         config = configparser.ConfigParser()
 
         config.add_section('General')
