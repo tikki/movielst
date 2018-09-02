@@ -29,6 +29,7 @@ EXT = (".3g2 .3gp .3gp2 .3gpp .60d .ajp .asf .asx .avchd .avi .bik .bix"
        ".wrap .wvx .wx .x264 .xvid")
 
 EXT = tuple(EXT.split())
+FORCE_INDEX = False
 logger = logging.getLogger(__name__)
 
 
@@ -77,6 +78,7 @@ def main():
     parser.add_argument('-y', '--year', help='Show movie name with its release date.', action='store_true')
     parser.add_argument('-r', '--runtime', help='Show movie name with its runtime.', action='store_true')
     parser.add_argument('-e', '--export', help='Export list to either csv or excel', nargs=2, metavar=('type', 'output'))
+    parser.add_argument('-f', '--force', help='Force indexing', action='store_true')
     parser.add_argument('-I', '--imdb-rev', help='Sort acc. to IMDB rating.(inc)', action='store_true')
     parser.add_argument('-T', '--tomato-rev', help='Sort acc. to Tomato Rotten rating.(inc)', action='store_true')
     parser.add_argument('-ec', '--edit-config', help='Open the configuration file in the default editor', action='store_true')
@@ -92,6 +94,14 @@ def get_version():
 
 def util(args):
     if args.PATH:
+        if args.force:
+            global FORCE_INDEX
+            FORCE_INDEX = True
+            con = connect_db()
+            cur = con.cursor()
+            cur.execute('DELETE FROM movies')
+            con.commit()
+            con.close()
         if os.path.isdir(args.PATH):
 
             print("\n\nIndexing all movies inside ",
@@ -375,7 +385,7 @@ def scan_dir(path, dir_json):
                         data[key] = "-"  # Should N/A be replaced with `-`?
                 data.update({"file_info": {"name": name, "location": original_path, "extension": ext}})
                 movies = db_to_json()
-                add_movie(data)
+                add_movie(data, FORCE_INDEX)
 
             else:
                 if data is not None:
