@@ -19,6 +19,7 @@ def create_config():
         config.set('General', 'log_level', 'INFO')
         config.set('General', 'log_location', CONFIG_PATH)
         config.set('Index', 'location', CONFIG_PATH)
+        config.set('Index', 'min_size_to_index', '25')
         config.set('API', 'use_external_api', 'omdb')
         config.set('API', 'OMDb_API_key', '37835d63')
         config.set('API', 'TMdb_API_key', '')

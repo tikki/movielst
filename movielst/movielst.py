@@ -369,7 +369,7 @@ def scan_dir(path, dir_json):
     for root, dirs, files in tqdm(os.walk(path)):
         for name in files:
             path = os.path.join(root, name)
-            if os.path.getsize(path) > (25*1024*1024):
+            if os.path.getsize(path) > (int(get_setting('Index', 'min_size_to_index'))*1024*1024):
                 ext = os.path.splitext(name)[1]
                 if ext in EXT:
                     movie_name.append(name)
