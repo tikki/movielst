@@ -1,7 +1,7 @@
 from flask import Flask, render_template, send_from_directory, send_file
 import json
 from movielst import config, database
-from web.forms import SettingsForm
+from web.forms import SettingsForm, LoginForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'not really secret but still a really useless secret key for this use case'
@@ -73,6 +73,13 @@ def export(type, name):
 @app.route('/movie/play/<variable>')
 def play(variable):
     return send_from_directory('/', variable)
+
+
+@app.route('/login')
+def login():
+    form = LoginForm()
+    form.process()
+    return render_template('login.html', form=form)
 
 
 if __name__ == '__main__':
