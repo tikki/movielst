@@ -395,12 +395,15 @@ def scan_dir(path, dir_json):
 def get_movie_info(name):
     """Find movie information"""
     movie_info = guessit(name)
-    if movie_info['type'] == "movie":
-        if 'year' in movie_info:
-            return get_api(movie_info['title'], movie_info['year'], external_api=get_setting('API', 'use_external_api'))
+    try:
+        if movie_info['type'] == "movie":
+            if 'year' in movie_info:
+                return get_api(movie_info['title'], movie_info['year'], external_api=get_setting('API', 'use_external_api'))
+            else:
+                return get_api(movie_info['title'], None, external_api=get_setting('API', 'use_external_api'))
         else:
-            return get_api(movie_info['title'], None, external_api=get_setting('API', 'use_external_api'))
-    else:
+            not_a_movie.append(name)
+    except KeyError:
         not_a_movie.append(name)
 
 
