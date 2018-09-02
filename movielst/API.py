@@ -35,7 +35,10 @@ def get_api(title, year, external_api="omdb"):
 
     elif external_api == "tmdb":
         tmdb = get_tmdb_movie(title, year)
-        tmdb_details = get_tmdb_details(tmdb["results"][0]['id'])
+        try:
+            tmdb_details = get_tmdb_details(tmdb["results"][0]['id'])
+        except IndexError:
+            item['response'] = 'False'
         if tmdb is not None and tmdb["results"]:
             poster_path = tmdb["results"][0]['poster_path']
 
