@@ -31,6 +31,9 @@ def get_tmdb_genre(ids):
         data = json.load(genre_list)
 
     for x in data['genres']:
-        if ids[0] == x['id']:
-            return x['name']
+        try:
+            if ids[0] == x['id']:
+                return x['name']
+        except IndexError:
+            return 'N/A'
 
