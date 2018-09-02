@@ -32,7 +32,6 @@ def add_movie(data, force_index):
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         '''
     elif force_index is False:
-        print("FORCE INDEX = FALSE")
         sql = '''
             INSERT OR IGNORE INTO movies
             (title, genre, imdb, runtime, tomato, year, awards, cast, director, poster, 
