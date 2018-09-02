@@ -8,7 +8,7 @@ app.config['SECRET_KEY'] = 'not really secret but still a really useless secret 
 
 
 def main():
-    app.run(debug=False)
+    app.run(host=config.get_setting('Web', 'host'), port=config.get_setting('Web', 'port'), debug=False)
 
 
 @app.route('/')
