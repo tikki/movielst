@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, PasswordField
 
 
 class SettingsForm(FlaskForm):
@@ -10,3 +10,9 @@ class SettingsForm(FlaskForm):
     omdb_api_key_field = StringField('OMDb API key')
     tmdb_api_key_field = StringField('TMDb API key')
     submit = SubmitField('Save')
+
+
+class LoginForm(FlaskForm):
+    username_field = StringField('Username')
+    password_field = PasswordField('Password')
+    login = SubmitField("Login")
