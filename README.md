@@ -20,12 +20,16 @@ This fork is intended to update the project to latest python version, fix existi
 
 ## Dependencies
 
+CLI :
 * [guessit](https://github.com/guessit-io/guessit) - Retrieving correct movie name from files.
 * [terminaltables](https://github.com/Robpol86/terminaltables) - Printing out tables nicely.
 * [tqdm](https://github.com/tqdm/tqdm) - Showing a progressbar when indexing movies.
 * [colorama](https://github.com/tartley/colorama) - Coloring outputs.
 * [XlsxWriter](https://github.com/jmcnamara/XlsxWriter) - Exporting table to excel.
 
+Web :
+* [Flask](https://github.com/pallets/flask) - Web framework
+* [Flask-WTF](https://github.com/lepture/flask-wtf) - Easier form handling
 
 ## Usage:
 ```sh
