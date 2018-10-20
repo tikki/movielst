@@ -82,6 +82,7 @@ def main():
     parser.add_argument('-I', '--imdb-rev', help='Sort acc. to IMDB rating.(inc)', action='store_true')
     parser.add_argument('-T', '--tomato-rev', help='Sort acc. to Tomato Rotten rating.(inc)', action='store_true')
     parser.add_argument('-ec', '--edit-config', help='Open the configuration file in the default editor', action='store_true')
+    parser.add_argument('-ed', '--edit-index', help='Edit the index file', action='store_true')
     util(parser.parse_args())
 
 
@@ -268,6 +269,49 @@ def util(args):
             subprocess.call(('start', CONFIG_PATH + CONFIG_FILE), shell=True)
         else:
             print("Can not open the configuration file. System not supported.")
+
+    elif args.edit_index:
+        table_data = [["TITLE", "FILE NAME"]]
+        data, table = butler(table_data)
+        i = 0
+        for item in data:
+            item["title"] = clean_table(item["title"], None, item,
+                                        table)
+            i += 1
+            table_data.append([item["title"], item["file_info"]["name"]])
+        sort_table(table_data, 1, False)
+        selection = input(Fore.GREEN + "Select FILE NAME to edit : " + Fore.RESET)
+        print("\n\n[0] - Edit name")
+        print("[1] - Edit genre")
+        print("[2] - Edit IMDb rating")
+        print("[3] - Edit runtime")
+        print("[4] - Edit Tomato rating")
+        print("[5] - Edit year")
+        print("[6] - Edit awards")
+        print("[7] - Edit cast")
+        print("[8] - Edit director")
+        print("[9] - Exit")
+        option = input(Fore.RED + "Select option : " + Fore.RESET)
+        if option == "0":
+            edit('name', selection, input("New name : "))
+        elif option == "1":
+            edit('genre', selection, input("New genre(s) : "))
+        elif option == "2":
+            edit('imdb_rating', selection, input("New IMDb rating :"))
+        elif option == "3":
+            edit('runtime', selection, input('New runtime : '))
+        elif option == "4":
+            edit('tomato_rating', selection, input("New Tomato rating"))
+        elif option == "5":
+            edit('year', selection, input("New year : "))
+        elif option == "6":
+            edit('awards', selection, input("New awards : "))
+        elif option == "7":
+            edit('cast', selection, input("New cast : "))
+        elif option == "8":
+            edit('directory', selection, input("New director : "))
+        else:
+            print("Exiting")
 
     else:
         sort_table(get_table_everything(printout=True), 0, False)

@@ -1,6 +1,7 @@
 import sqlite3
 import csv
 import xlsxwriter
+import logging
 from .config import *
 
 
@@ -80,3 +81,30 @@ def db_to_json():
                       'year': row[5], 'awards': row[6], 'cast': row[7], 'director': row[8], 'poster': row[9],
                       'response': row[10], 'file_info': {'name': row[11], 'location': row[12], 'extension': row[13]}})
     return items
+
+
+def edit(type, file_name, new_info):
+    con = connect_db()
+    cur = con.cursor()
+    if type == "name":
+        cur.execute('UPDATE movies SET title=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "genre":
+        cur.execute('UPDATE movies SET genre=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "imdb_rating":
+        cur.execute('UPDATE movies SET imdb=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "runtime":
+        cur.execute('UPDATE movies SET runtime=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "tomato_rating":
+        cur.execute('UPDATE movies SET tomato=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "year":
+        cur.execute('UPDATE movies SET year=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "awards":
+        cur.execute('UPDATE movies SET awards=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "cast":
+        cur.execute('UPDATE movies SET cast=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "director":
+        cur.execute('UPDATE movies SET director=? WHERE file_info_name=?', (new_info, file_name))
+    else:
+        logging.error("Unsupported edit type : " + type)
+    con.commit()
+    con.close()
