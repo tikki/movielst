@@ -35,9 +35,10 @@ Web :
 ## Usage:
 ```sh
   movielst PATH
-  movielst [-i | -t | -g | -a | -c | -d | -y | -r | [-e type output] | -I | -T ]
+  movielst [-i | -t | -g | -a | -c | -d | -y | -r | [-e type output] | -f | -I | -T | -ec | -ed]
   movielst -h | --help
   movielst --version
+  movielst_web
 ```
 
 ### Options:
@@ -55,8 +56,11 @@ Web :
   -r, --runtime         Show movie name with its runtime.
   -e type output, --export type output
                         Export list to either csv or excel
+  -f, --force           Force indexing
   -I, --imdb-rev        Sort acc. to IMDB rating.(inc)
   -T, --tomato-rev      Sort acc. to Tomato Rotten rating.(inc)
+  -ec, --edit-config    Open the configuration file in the default editor
+  -ed, --edit-index     Edit the index file
 ```
 
 ## Credits
