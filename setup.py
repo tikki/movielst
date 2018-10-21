@@ -3,6 +3,8 @@ from setuptools import setup
 setup(name='movielst',
       version='2.2.1',
       description='Everything about your movies within the command line.',
+      long_description=open('README.md', 'r').read(),
+      long_description_content_type='text/markdown',
       url='https://github.com/Mozzo1000/movielst',
       author='Andreas Backström',
       author_email='andreas@simplymozzo.se',
