@@ -2,13 +2,21 @@ from flask import Flask, render_template, send_from_directory, send_file
 import json
 from movielst import config, database
 from web.forms import SettingsForm, LoginForm
+from web.dependency import check_for_dep
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'not really secret but still a really useless secret key for this use case'
+app.config['DEP_FOLDER'] = config.CONFIG_PATH + 'dep/'
 
 
 def main():
+    check_for_dep()
     app.run(host=config.get_setting('Web', 'host'), port=config.get_setting('Web', 'port'), debug=False)
+
+
+@app.route('/api/v1/dep/<path:filename>', methods=["GET"])
+def dep_files(filename):
+    return send_from_directory(app.config['DEP_FOLDER'], filename=filename)
 
 
 @app.route('/')
