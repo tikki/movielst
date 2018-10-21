@@ -10,7 +10,7 @@ This fork is intended to update the project to latest python version, fix existi
 * Export to csv and xlsx file
 * Use either OMDb(default) or TMDb API to retrieve movie information
 * Web interface
-
+* Edit index file from commmand line
 
 ## Installation
 #### Install latest stable with pip
