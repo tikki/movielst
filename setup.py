@@ -7,6 +7,7 @@ setup(name='movielst',
       author='Andreas Backström',
       author_email='andreas@simplymozzo.se',
       license='MIT',
+      include_package_data=True,
       packages=['movielst', 'web'],
       entry_points={
                 'console_scripts': ['movielst=movielst:main', 'movielst_web=web.main:main']
