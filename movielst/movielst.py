@@ -1,16 +1,10 @@
-
 import textwrap
-import json
 import argparse
 import pkg_resources
 import hashlib
-import csv
-import xlsxwriter
-import logging
 import logging.config
 import platform
 import subprocess
-from .config import *
 from .API import get_api
 from .database import *
 from guessit import guessit
