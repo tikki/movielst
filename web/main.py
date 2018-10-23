@@ -42,6 +42,7 @@ def movie(variable):
             list["awards"] = datas["awards"]
             list["cast"] = datas["cast"]
             list["director"] = datas["director"]
+            list["poster"] = datas["poster"]
         i += 1
     return render_template('movie.html', list=list)
 
