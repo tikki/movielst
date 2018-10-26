@@ -21,7 +21,8 @@ def dep_files(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if not session.get('logged_in'):
+    print(config.get_setting('Web', 'require_login'))
+    if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
         return login()
     else:
         data = database.db_to_json()
