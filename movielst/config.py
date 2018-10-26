@@ -25,6 +25,7 @@ def create_config():
         config.set('API', 'TMdb_API_key', '')
         config.set('Web', 'host', 'localhost')
         config.set('Web', 'port', '5000')
+        config.set('Web', 'require_login', "False")
 
         with open(CONFIG_PATH + CONFIG_FILE, 'w') as config_file:
             config.write(config_file)
