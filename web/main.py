@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, send_file
+from flask import Flask, render_template, send_from_directory, send_file, session, request, redirect
 import json
 from movielst import config, database
 from web.forms import SettingsForm, LoginForm
@@ -19,11 +19,13 @@ def dep_files(filename):
     return send_from_directory(app.config['DEP_FOLDER'], filename=filename)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    data = database.db_to_json()
-
-    return render_template('home.html', movie_list=data)
+    if not session.get('logged_in'):
+        return login()
+    else:
+        data = database.db_to_json()
+        return render_template('home.html', movie_list=data)
 
 
 @app.route('/movie/<variable>')
@@ -84,11 +86,23 @@ def play(variable):
     return send_from_directory('/', variable)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    form.process()
+    if request.method == "POST":
+        if form.validate_on_submit():
+            if  database.verify_user(form.username_field.data, form.password_field.data):
+                session['logged_in'] = True
+                return redirect('/')
+            else:
+                print("login failed")
     return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    session['logged_in'] = False
+    return redirect('/')
 
 
 if __name__ == '__main__':
