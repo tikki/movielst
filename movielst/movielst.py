@@ -30,6 +30,8 @@ logger = logging.getLogger(__name__)
 def main():
     create_config()
     create_movie_table()
+    create_user_table()
+    add_user('admin', 'admin')
     logging.config.dictConfig({
         'version': 1,
         'disable_existing_loggers': False,

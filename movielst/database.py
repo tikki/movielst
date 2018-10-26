@@ -2,12 +2,52 @@ import sqlite3
 import csv
 import xlsxwriter
 import logging
+from passlib.context import CryptContext
 from .config import *
+
+pwd_context = CryptContext(schemes=['pbkdf2_sha256'], default='pbkdf2_sha256', pbkdf2_sha256__default_rounds=30000)
 
 
 def connect_db():
     con = sqlite3.connect(get_setting('Index', 'location') + 'movies.db')
     return con
+
+
+def create_user_table():
+    print("CREATING USER TABLE!")
+    sql = '''
+        CREATE TABLE IF NOT EXISTS users
+        (user TEXT PRIMARY KEY, password TEXT)
+    '''
+    con = connect_db()
+    cur = con.cursor()
+    cur.execute(sql)
+    con.commit()
+    con.close()
+
+
+def add_user(username, password):
+    sql = '''
+        INSERT OR IGNORE INTO users
+        (user, password) VALUES(?, ?)    
+    '''
+    con = connect_db()
+    cur = con.cursor()
+    cur.execute(sql, (username, pwd_context.encrypt(password)))
+    con.commit()
+    cur.close()
+
+
+def verify_user(username, password):
+    con = connect_db()
+    cur = con.cursor()
+    cur.execute('SELECT password FROM users WHERE user=?', (username,))
+    try:
+        result = pwd_context.verify(password, cur.fetchone()[0])
+    except TypeError:
+        return False
+    return result
+
 
 
 def create_movie_table():
