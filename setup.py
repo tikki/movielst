@@ -21,7 +21,8 @@ setup(name='movielst',
           'colorama',
           'xlsxwriter',
           'flask',
-          'Flask-WTF'
+          'Flask-WTF',
+          'passlib'
       ],
       keywords=['movies', 'CLI', 'movies-within-CLI', 'python'],
       classifiers=[
