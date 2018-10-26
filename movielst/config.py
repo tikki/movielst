@@ -36,9 +36,9 @@ def get_config():
     return config
 
 
-def get_setting(section, setting):
+def get_setting(section, setting, fallback=None):
     config = get_config()
-    return config.get(section, setting)
+    return config.get(section, setting, fallback=fallback)
 
 
 def update_config(section, setting, value):
