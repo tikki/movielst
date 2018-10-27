@@ -14,6 +14,7 @@ def get_api(title, year, external_api="omdb"):
         "cast": None,
         "director": None,
         "poster": None,
+        "description": None,
         "response": False
     }
     if external_api == "omdb":
@@ -29,6 +30,7 @@ def get_api(title, year, external_api="omdb"):
             item["cast"] = omdb["Actors"]
             item["director"] = omdb["Director"]
             item["poster"] = omdb["Poster"]
+            item["description"] = omdb["Plot"]
             item['response'] = omdb["Response"]
         else:
             item['response'] = 'False'
