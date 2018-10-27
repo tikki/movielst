@@ -6,11 +6,37 @@ from passlib.context import CryptContext
 from .config import *
 
 pwd_context = CryptContext(schemes=['pbkdf2_sha256'], default='pbkdf2_sha256', pbkdf2_sha256__default_rounds=30000)
+LATEST_VERSION = 0
 
 
 def connect_db():
     con = sqlite3.connect(get_setting('Index', 'location') + 'movies.db')
     return con
+
+
+def upgrade():
+    con = connect_db()
+    cur = con.cursor()
+    cur.execute('CREATE TABLE IF NOT EXISTS version (db_version INTEGER UNIQUE)')
+    con.commit()
+    version = cur.execute('SELECT db_version FROM version')
+    try:
+        current_version = version.fetchone()[0]
+    except TypeError:
+        cur.execute('INSERT INTO version (db_version) VALUES(?)', (LATEST_VERSION,))
+        con.commit()
+        current_version = LATEST_VERSION
+    if current_version == LATEST_VERSION:
+        logging.info('Database already latest version, doing nothing.')
+    elif current_version < LATEST_VERSION:
+        logging.info('Upgrading database to latest version')
+        db_upgrade_file = open('db_upgrade', 'r')
+        s = db_upgrade_file.read()
+        upgrade_sql = s[s.find('[UPGRADE_START_'+str(LATEST_VERSION)+']')+len('[UPGRADE_START_'+str(LATEST_VERSION)+']'):s.rfind('[UPGRADE_END_'+str(LATEST_VERSION)+']')]
+        cur.execute(upgrade_sql)
+        cur.execute('UPDATE version SET db_version=?', (LATEST_VERSION,))
+        con.commit()
+    cur.close()
 
 
 def create_user_table():

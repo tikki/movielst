@@ -32,6 +32,7 @@ def main():
     create_movie_table()
     create_user_table()
     add_user('admin', 'admin')
+    upgrade()
     logging.config.dictConfig({
         'version': 1,
         'disable_existing_loggers': False,
