@@ -9,6 +9,9 @@ class SettingsForm(FlaskForm):
     use_external_api_field = SelectField('External API', choices=[('omdb', 'OMDb'), ('tmdb', 'TMDb')])
     omdb_api_key_field = StringField('OMDb API key')
     tmdb_api_key_field = StringField('TMDb API key')
+    web_host_field = StringField('Web host address')
+    web_port_field = StringField('Web port')
+    web_require_login_field = SelectField('Require login', choices=[('False', 'No'), ('True', 'Yes')])
     submit = SubmitField('Save')
 
 

@@ -60,6 +60,9 @@ def settings():
     form.use_external_api_field.default = config.get_setting('API', 'use_external_api')
     form.omdb_api_key_field.default = config.get_setting('API', 'OMDb_API_key')
     form.tmdb_api_key_field.default = config.get_setting('API', 'TMdb_API_key')
+    form.web_host_field.default = config.get_setting('Web', 'host')
+    form.web_port_field.default = config.get_setting('Web', 'port')
+    form.web_require_login_field.default = config.get_setting('Web', 'require_login')
     if form.validate_on_submit():
         config.update_config('General', 'log_level', form.log_level_field.data)
         config.update_config('General', 'log_location', form.log_location_field.data)
@@ -67,6 +70,9 @@ def settings():
         config.update_config('API', 'use_external_api', form.use_external_api_field.data)
         config.update_config('API', 'OMDb_API_key', form.omdb_api_key_field.data)
         config.update_config('API', 'TMdb_API_key', form.tmdb_api_key_field.data)
+        config.update_config('Web', 'host', form.web_host_field.data)
+        config.update_config('Web', 'port', form.web_port_field.data)
+        config.update_config('Web', 'require_login', form.web_require_login_field.data)
     form.process()
     return render_template('settings.html', form=form)
 
