@@ -81,6 +81,14 @@ def get_users():
     return cur.execute('SELECT user FROM users')
 
 
+def delete_user(username):
+    con = connect_db()
+    cur = con.cursor()
+    cur.execute('DELETE FROM users WHERE user=?', (username,))
+    con.commit()
+    con.close()
+
+
 def create_movie_table():
     sql = '''
         CREATE TABLE IF NOT EXISTS movies
