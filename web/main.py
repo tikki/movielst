@@ -74,7 +74,7 @@ def settings():
         config.update_config('Web', 'port', form.web_port_field.data)
         config.update_config('Web', 'require_login', form.web_require_login_field.data)
     form.process()
-    return render_template('settings.html', form=form)
+    return render_template('settings/settings.html', form=form)
 
 
 @app.route('/export/<type>/<name>')
