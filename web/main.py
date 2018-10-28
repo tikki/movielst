@@ -1,7 +1,7 @@
 from flask import Flask, render_template, send_from_directory, send_file, session, request, redirect
 import json
 from movielst import config, database
-from web.forms import SettingsForm, LoginForm
+from web.forms import SettingsForm, LoginForm, AddUserForm
 from web.dependency import check_for_dep
 
 app = Flask(__name__)
@@ -75,6 +75,23 @@ def settings():
         config.update_config('Web', 'require_login', form.web_require_login_field.data)
     form.process()
     return render_template('settings/settings.html', form=form)
+
+
+@app.route('/settings/users', methods=['GET', 'POST'])
+def settings_user():
+    form = AddUserForm()
+    choices_list = [(i[0], i[0]) for i in database.get_users()]
+    form.user_list_field.choices = choices_list
+
+    if form.validate_on_submit():
+        if form.submit.data:
+            # Add user to database
+            database.add_user(form.username_field.data, form.password_field.data)
+        if form.delete.data:
+            print(form.user_list_field.data)
+            database.delete_user(form.user_list_field.data)
+    form.process()
+    return render_template('settings/users.html', form=form)
 
 
 @app.route('/export/<type>/<name>')

@@ -19,3 +19,11 @@ class LoginForm(FlaskForm):
     username_field = StringField('Username')
     password_field = PasswordField('Password')
     login = SubmitField("Login")
+
+
+class AddUserForm(FlaskForm):
+    username_field = StringField('Username')
+    password_field = PasswordField('Password')
+    user_list_field = SelectField('Users', choices=[('admin', 'admin')])
+    submit = SubmitField('Add')
+    delete = SubmitField('Delete')
