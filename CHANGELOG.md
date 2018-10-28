@@ -1,6 +1,22 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.0] - 2018-10-28
+### Added
+- Backend user database implemented.
+- New config option, 'require_login'.
+- Functional web login page.
+- Database migration.
+- Get movie plot and display on web page.
+- User creation and deletion from web settings page.
+- Added web config options to settings page.
+
+### Changed
+- Removed external links to dependencies in the web interface.
+- Updated look of settings page in the web interface.
+- Settings page now has a dropdown list for external API selection.
+
+
 ## [2.3.0] - 2018-10-21
 ### Added
 - Command to edit index file from command line.
