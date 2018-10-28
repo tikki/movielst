@@ -1,19 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Settings</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#settingsNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="settingsNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="/settings">Configuration<span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-  </div>
-</nav>
+{% include 'includes/_navbar_settings.html' %}
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <br />
