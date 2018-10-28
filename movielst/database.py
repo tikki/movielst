@@ -40,7 +40,6 @@ def upgrade():
 
 
 def create_user_table():
-    print("CREATING USER TABLE!")
     sql = '''
         CREATE TABLE IF NOT EXISTS users
         (user TEXT PRIMARY KEY, password TEXT)

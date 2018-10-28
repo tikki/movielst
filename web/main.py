@@ -21,7 +21,6 @@ def dep_files(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    print(config.get_setting('Web', 'require_login'))
     if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
         return login()
     else:
@@ -88,7 +87,6 @@ def settings_user():
             # Add user to database
             database.add_user(form.username_field.data, form.password_field.data)
         if form.delete.data:
-            print(form.user_list_field.data)
             database.delete_user(form.user_list_field.data)
     form.process()
     return render_template('settings/users.html', form=form)
