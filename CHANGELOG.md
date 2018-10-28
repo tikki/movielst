@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [2.3] - 2018-10-21
+## [2.3.0] - 2018-10-21
 ### Added
 - Command to edit index file from command line.
 - Command to open configuration file in system default editor.
@@ -23,14 +23,14 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Requirements missing for the web interface in setup.py
 
-## [2.2] - 2018-08-18
+## [2.2.0] - 2018-08-18
 ### Added
 - Web interface
 
 ### Changed
 - First stage moving .json index file to sql database.
 
-## [2.1] - 2018-08-14
+## [2.1.0] - 2018-08-14
 First release of ``movielst``
 ### Added
 - File info to index file. Extension, filename and location.
