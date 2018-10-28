@@ -75,6 +75,11 @@ def verify_user(username, password):
     return result
 
 
+def get_users():
+    con = connect_db()
+    cur = con.cursor()
+    return cur.execute('SELECT user FROM users')
+
 
 def create_movie_table():
     sql = '''
