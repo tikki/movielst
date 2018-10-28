@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.1] - 2018-10-28
+## Fixed
+- Removed debug printouts.
+
 ## [2.4.0] - 2018-10-28
 ### Added
 - Backend user database implemented.
