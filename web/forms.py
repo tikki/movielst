@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, SelectField
+from wtforms import StringField, SubmitField, PasswordField, SelectField, IntegerField
 
 
 class SettingsForm(FlaskForm):
     log_level_field = SelectField('Log level', choices=[('CRITICAL', 'CRITICAL'), ('ERROR', 'ERROR'), ('WARNING', 'WARNING'), ('INFO', 'INFO'), ('DEBUG', 'DEBUG')])
     log_location_field = StringField('Log location')
     location_field = StringField('Index location')
+    min_index_field = IntegerField('Min size to index (in MB)')
     use_external_api_field = SelectField('External API', choices=[('omdb', 'OMDb'), ('tmdb', 'TMDb')])
     omdb_api_key_field = StringField('OMDb API key')
     tmdb_api_key_field = StringField('TMDb API key')
