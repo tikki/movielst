@@ -25,6 +25,8 @@ def index():
         return login()
     else:
         data = database.db_to_json()
+        if not data:
+            data = None
         return render_template('home.html', movie_list=data)
 
 
