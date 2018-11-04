@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, PasswordField, SelectField
 
 
 class SettingsForm(FlaskForm):
-    log_level_field = StringField('Log level')
+    log_level_field = SelectField('Log level', choices=[('CRITICAL', 'CRITICAL'), ('ERROR', 'ERROR'), ('WARNING', 'WARNING'), ('INFO', 'INFO'), ('DEBUG', 'DEBUG')])
     log_location_field = StringField('Log location')
     location_field = StringField('Index location')
     use_external_api_field = SelectField('External API', choices=[('omdb', 'OMDb'), ('tmdb', 'TMDb')])
