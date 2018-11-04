@@ -87,6 +87,8 @@ def settings():
         config.update_config('Web', 'host', form.web_host_field.data)
         config.update_config('Web', 'port', form.web_port_field.data)
         config.update_config('Web', 'require_login', form.web_require_login_field.data)
+        if form.delete_index.data:
+            database.delete_all_movies()
     form.process()
     return render_template('settings/settings.html', form=form)
 

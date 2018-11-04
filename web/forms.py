@@ -14,6 +14,7 @@ class SettingsForm(FlaskForm):
     web_port_field = StringField('Web port')
     web_require_login_field = SelectField('Require login', choices=[('False', 'No'), ('True', 'Yes')])
     submit = SubmitField('Save')
+    delete_index = SubmitField('Delete index')
 
 
 class LoginForm(FlaskForm):
