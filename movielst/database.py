@@ -186,3 +186,11 @@ def edit(type, file_name, new_info):
         logging.error("Unsupported edit type : " + type)
     con.commit()
     con.close()
+
+
+def delete_all_movies():
+    con = connect_db()
+    cur = con.cursor()
+    cur.execute('DELETE FROM movies')
+    con.commit()
+    con.close()
