@@ -1,7 +1,8 @@
 from flask import Flask, render_template, send_from_directory, send_file, session, request, redirect
 import json
+import subprocess
 from movielst import config, database
-from web.forms import SettingsForm, LoginForm, AddUserForm
+from web.forms import SettingsForm, LoginForm, AddUserForm, IndexForm
 from web.dependency import check_for_dep
 
 app = Flask(__name__)
@@ -24,10 +25,20 @@ def index():
     if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
         return login()
     else:
+        form = IndexForm()
+        error = None
         data = database.db_to_json()
         if not data:
             data = None
-        return render_template('home.html', movie_list=data)
+        if form.validate_on_submit():
+            if form.run_index.data:
+                output = subprocess.check_output('movielst ' + form.index_location.data)
+                if "Directory does not exists." in str(output):
+                    error = "invalid directory"
+                else:
+                    return redirect('/')
+        form.process()
+        return render_template('home.html', movie_list=data, form=form, error=error)
 
 
 @app.route('/movie/<variable>')

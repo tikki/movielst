@@ -28,3 +28,8 @@ class AddUserForm(FlaskForm):
     user_list_field = SelectField('Users', choices=[('admin', 'admin')])
     submit = SubmitField('Add')
     delete = SubmitField('Delete')
+
+
+class IndexForm(FlaskForm):
+    index_location = StringField("Folder to index")
+    run_index = SubmitField("Run Indexing")

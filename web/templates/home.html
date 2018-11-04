@@ -1,9 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            ERROR OCCURRED : {{ error }}
+        </div>
+    {% endif %}
     {% if movie_list is none %}
         <div class="alert alert-warning" role="alert">
-            No movies found, please index!
+            No movies found, please <a href="#indexModal" data-toggle="modal" data-target="#indexModal">index!</a>
         </div>
     {% else %}
         <section id="row">
@@ -19,4 +24,27 @@
           {% endfor %}
         </section>
     {% endif %}
+    <div class="modal fade" id="indexModal" tabindex="-1" role="dialog" aria-labelledby="indexModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="indexModalLabel">Index movies</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" novalidate>
+                        {{ form.hidden_tag() }}
+                        <p>{{ form.index_location.label }} : {{ form.index_location(class_='form-control') }}</p>
+                    run indexation oof movies
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {{ form.run_index(class_='btn btn-success') }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
