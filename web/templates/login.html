@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>movielst web</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('dep_files', filename='bootstrap.min.css') }}">
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 
     </head>
@@ -17,6 +17,6 @@
                  {{ form.login(class_='btn btn-lg btn-primary btn-block') }}
              </form>
         </div>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{{ url_for('dep_files', filename='boostrap.min.js') }}"></script>
     </body>
 </html>
