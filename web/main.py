@@ -43,82 +43,94 @@ def index():
 
 @app.route('/movie/<variable>')
 def movie(variable):
-    data = database.db_to_json()
-    i = 0
-    list = {}
-    for datas in data:
-        if datas["title"] == variable:
-            list["title"] = datas["title"]
-            list["genre"] = datas["genre"]
-            list["imdb"] = datas["imdb"]
-            list["runtime"] = datas["runtime"]
-            list["tomato"] = datas["tomato"]
-            list["year"] = datas["year"]
-            list["awards"] = datas["awards"]
-            list["cast"] = datas["cast"]
-            list["director"] = datas["director"]
-            list["poster"] = datas["poster"]
-            list["description"] = datas["description"]
-        i += 1
-    return render_template('movie.html', list=list)
+    if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
+        return login()
+    else:
+        data = database.db_to_json()
+        i = 0
+        list = {}
+        for datas in data:
+            if datas["title"] == variable:
+                list["title"] = datas["title"]
+                list["genre"] = datas["genre"]
+                list["imdb"] = datas["imdb"]
+                list["runtime"] = datas["runtime"]
+                list["tomato"] = datas["tomato"]
+                list["year"] = datas["year"]
+                list["awards"] = datas["awards"]
+                list["cast"] = datas["cast"]
+                list["director"] = datas["director"]
+                list["poster"] = datas["poster"]
+                list["description"] = datas["description"]
+            i += 1
+        return render_template('movie.html', list=list)
 
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    form = SettingsForm()
-    form.log_level_field.default = config.get_setting('General', 'log_level')
-    form.log_location_field.default = config.get_setting('General', 'log_location')
-    form.location_field.default = config.get_setting('Index', 'location')
-    form.min_index_field.default = config.get_setting('Index', 'min_size_to_index')
-    form.use_external_api_field.default = config.get_setting('API', 'use_external_api')
-    form.omdb_api_key_field.default = config.get_setting('API', 'OMDb_API_key')
-    form.tmdb_api_key_field.default = config.get_setting('API', 'TMdb_API_key')
-    form.web_host_field.default = config.get_setting('Web', 'host')
-    form.web_port_field.default = config.get_setting('Web', 'port')
-    form.web_require_login_field.default = config.get_setting('Web', 'require_login')
-    if form.validate_on_submit():
-        config.update_config('General', 'log_level', form.log_level_field.data)
-        config.update_config('General', 'log_location', form.log_location_field.data)
-        config.update_config('Index', 'location', form.location_field.data)
-        config.update_config('Index', 'min_size_to_index', str(form.min_index_field.data))
-        config.update_config('API', 'use_external_api', form.use_external_api_field.data)
-        config.update_config('API', 'OMDb_API_key', form.omdb_api_key_field.data)
-        config.update_config('API', 'TMdb_API_key', form.tmdb_api_key_field.data)
-        config.update_config('Web', 'host', form.web_host_field.data)
-        config.update_config('Web', 'port', form.web_port_field.data)
-        config.update_config('Web', 'require_login', form.web_require_login_field.data)
-        if form.delete_index.data:
-            database.delete_all_movies()
-    form.process()
-    return render_template('settings/settings.html', form=form)
+    if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
+        return login()
+    else:
+        form = SettingsForm()
+        form.log_level_field.default = config.get_setting('General', 'log_level')
+        form.log_location_field.default = config.get_setting('General', 'log_location')
+        form.location_field.default = config.get_setting('Index', 'location')
+        form.min_index_field.default = config.get_setting('Index', 'min_size_to_index')
+        form.use_external_api_field.default = config.get_setting('API', 'use_external_api')
+        form.omdb_api_key_field.default = config.get_setting('API', 'OMDb_API_key')
+        form.tmdb_api_key_field.default = config.get_setting('API', 'TMdb_API_key')
+        form.web_host_field.default = config.get_setting('Web', 'host')
+        form.web_port_field.default = config.get_setting('Web', 'port')
+        form.web_require_login_field.default = config.get_setting('Web', 'require_login')
+        if form.validate_on_submit():
+            config.update_config('General', 'log_level', form.log_level_field.data)
+            config.update_config('General', 'log_location', form.log_location_field.data)
+            config.update_config('Index', 'location', form.location_field.data)
+            config.update_config('Index', 'min_size_to_index', str(form.min_index_field.data))
+            config.update_config('API', 'use_external_api', form.use_external_api_field.data)
+            config.update_config('API', 'OMDb_API_key', form.omdb_api_key_field.data)
+            config.update_config('API', 'TMdb_API_key', form.tmdb_api_key_field.data)
+            config.update_config('Web', 'host', form.web_host_field.data)
+            config.update_config('Web', 'port', form.web_port_field.data)
+            config.update_config('Web', 'require_login', form.web_require_login_field.data)
+            if form.delete_index.data:
+                database.delete_all_movies()
+        form.process()
+        return render_template('settings/settings.html', form=form)
 
 
 @app.route('/settings/users', methods=['GET', 'POST'])
 def settings_user():
-    form = AddUserForm()
-    choices_list = [(i[0], i[0]) for i in database.get_users()]
-    form.user_list_field.choices = choices_list
+    if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
+        return login()
+    else:
+        form = AddUserForm()
+        choices_list = [(i[0], i[0]) for i in database.get_users()]
+        form.user_list_field.choices = choices_list
 
-    if form.validate_on_submit():
-        if form.submit.data:
-            # Add user to database
-            database.add_user(form.username_field.data, form.password_field.data)
-        if form.delete.data:
-            database.delete_user(form.user_list_field.data)
-    form.process()
-    return render_template('settings/users.html', form=form)
+        if form.validate_on_submit():
+            if form.submit.data:
+                # Add user to database
+                database.add_user(form.username_field.data, form.password_field.data)
+            if form.delete.data:
+                database.delete_user(form.user_list_field.data)
+        form.process()
+        return render_template('settings/users.html', form=form)
 
 
 @app.route('/export/<type>/<name>')
 def export(type, name):
-    if type == 'csv':
-        database.export_to_csv(config.CONFIG_PATH + name)
-        return send_file(config.CONFIG_PATH + name, as_attachment=True)
-    elif type == 'xlsx':
-        database.export_to_xlsx(config.CONFIG_PATH + name)
-        return send_file(config.CONFIG_PATH + name, as_attachment=True)
+    if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
+        return login()
     else:
-        return "File type not supported"
+        if type == 'csv':
+            database.export_to_csv(config.CONFIG_PATH + name)
+            return send_file(config.CONFIG_PATH + name, as_attachment=True)
+        elif type == 'xlsx':
+            database.export_to_xlsx(config.CONFIG_PATH + name)
+            return send_file(config.CONFIG_PATH + name, as_attachment=True)
+        else:
+            return "File type not supported"
 
 
 @app.route('/movie/play/<variable>')
