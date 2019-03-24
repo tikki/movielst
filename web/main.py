@@ -41,6 +41,7 @@ def index():
     else:
         form = IndexForm()
         error = None
+        cached = False
         data = database.db_to_json()
         if not data:
             data = None
@@ -52,14 +53,14 @@ def index():
                 else:
                     return redirect('/')
         form.process()
-        for movie in data:
-            if re.match(regex_url_valid, movie["poster"]):
-                # is a valid url, return cached False, ie. do nothing
-                cached = False
-            else:
-                # Is not a url, return cached True to show local file instead#
-                cached = True
-        return render_template('home.html', movie_list=data, form=form, error=error, cached=cached)
+        if data is not None:
+            for movie in data:
+                if re.match(regex_url_valid, movie["poster"]):
+                    # is a valid url, return cached False, ie. do nothing
+                    cached = False
+                else:
+                    # Is not a url, return cached True to show local file instead#
+                    cached = True
 
 
 @app.route('/movie/<variable>')
