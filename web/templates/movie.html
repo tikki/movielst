@@ -2,7 +2,11 @@
 
 {% block body %}
     <div id="movie_container">
-        <img src="{{ list["poster"] }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
+        {% if cached %}
+            <img src="{{ url_for('cached_image_file', filename=list["poster"]) }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
+        {% else %}
+            <img src="{{ list["poster"] }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
+        {% endif %}
         <h1>{{ list["title"] }}</h1>
         <h6 style="display: inline;">{{ list["genre"] }}</h6>
         <h6 style="display: inline; margin-left: 5%;">{{ list["year"] }}</h6>

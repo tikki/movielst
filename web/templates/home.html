@@ -16,7 +16,11 @@
                 <div class="responsive">
                     <div class="gallery">
                         <a href="/movie/{{ movie["title"] }} ">
-                            <img src="{{ movie["poster"] }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
+                            {% if cached %}
+                                <img src="{{ url_for('cached_image_file', filename=movie["poster"].split('cache/')[1]) }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
+                            {% else %}
+                                <img src="{{ movie["poster"] }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
+                            {% endif %}
                         </a>
                         <div class="desc">{{ movie["title"] }}</div>
                     </div>

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, send_from_directory, send_file, session, request, redirect
 import json
 import subprocess
+import re
 from movielst import config, database
 from web.forms import SettingsForm, LoginForm, AddUserForm, IndexForm
 from web.dependency import check_for_dep
@@ -8,7 +9,15 @@ from web.dependency import check_for_dep
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'not really secret but still a really useless secret key for this use case'
 app.config['DEP_FOLDER'] = config.CONFIG_PATH + 'dep/'
+app.config['CACHE_FOLDER'] = config.CONFIG_PATH + 'cache/'
 
+regex_url_valid = re.compile(
+        r'^(?:http|ftp)s?://'  # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+        r'localhost|'  # localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+        r'(?::\d+)?'  # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 def main():
     check_for_dep()
@@ -18,6 +27,11 @@ def main():
 @app.route('/api/v1/dep/<path:filename>', methods=["GET"])
 def dep_files(filename):
     return send_from_directory(app.config['DEP_FOLDER'], filename=filename)
+
+
+@app.route('/api/v1/cache/<path:filename>', methods=["GET"])
+def cached_image_file(filename):
+    return send_from_directory(app.config['CACHE_FOLDER'], filename=filename)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -38,7 +52,14 @@ def index():
                 else:
                     return redirect('/')
         form.process()
-        return render_template('home.html', movie_list=data, form=form, error=error)
+        for movie in data:
+            if re.match(regex_url_valid, movie["poster"]):
+                # is a valid url, return cached False, ie. do nothing
+                cached = False
+            else:
+                # Is not a url, return cached True to show local file instead#
+                cached = True
+        return render_template('home.html', movie_list=data, form=form, error=error, cached=cached)
 
 
 @app.route('/movie/<variable>')
@@ -61,9 +82,15 @@ def movie(variable):
                 list["cast"] = datas["cast"]
                 list["director"] = datas["director"]
                 list["poster"] = datas["poster"]
+                if re.match(regex_url_valid, list["poster"]):
+                    cached = False
+                else:
+                    list["poster"] = list["poster"].replace(config.CONFIG_PATH + 'cache/', '')
+                    cached = True
+
                 list["description"] = datas["description"]
             i += 1
-        return render_template('movie.html', list=list)
+        return render_template('movie.html', list=list, cached=cached)
 
 
 @app.route('/settings', methods=['GET', 'POST'])
