@@ -182,6 +182,8 @@ def edit(type, file_name, new_info):
         cur.execute('UPDATE movies SET cast=? WHERE file_info_name=?', (new_info, file_name))
     elif type == "director":
         cur.execute('UPDATE movies SET director=? WHERE file_info_name=?', (new_info, file_name))
+    elif type == "poster":
+        cur.execute('UPDATE movies SET poster=? WHERE file_info_name=?', (new_info, file_name))
     else:
         logging.error("Unsupported edit type : " + type)
     con.commit()

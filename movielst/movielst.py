@@ -287,7 +287,8 @@ def util(args):
         print("[6] - Edit awards")
         print("[7] - Edit cast")
         print("[8] - Edit director")
-        print("[9] - Exit")
+        print("[9] - Edit poster")
+        print("[10] - Exit")
         option = input(Fore.RED + "Select option : " + Fore.RESET)
         if option == "0":
             edit('name', selection, input("New name : "))
@@ -307,6 +308,8 @@ def util(args):
             edit('cast', selection, input("New cast : "))
         elif option == "8":
             edit('directory', selection, input("New director : "))
+        elif option == "9":
+            edit('poster', selection, input("New poster : "))
         else:
             print("Exiting")
 
