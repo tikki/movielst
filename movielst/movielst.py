@@ -5,6 +5,10 @@ import hashlib
 import logging.config
 import platform
 import subprocess
+import urllib.request
+import urllib.error
+import uuid
+import hashlib
 from .API import get_api
 from .database import *
 from guessit import guessit
@@ -80,6 +84,7 @@ def main():
     parser.add_argument('-T', '--tomato-rev', help='Sort acc. to Tomato Rotten rating.(inc)', action='store_true')
     parser.add_argument('-ec', '--edit-config', help='Open the configuration file in the default editor', action='store_true')
     parser.add_argument('-ed', '--edit-index', help='Edit the index file', action='store_true')
+    parser.add_argument('--download-images', help='Will download and store all poster images, will write over the location url in the database', action='store_true')
     util(parser.parse_args())
 
 
@@ -107,7 +112,7 @@ def util(args):
             logger.info('Started new index at: ' + args.PATH)
 
             dir_json = get_setting('Index', 'location') + 'movies.json'
-            scan_dir(args.PATH, dir_json)
+            scan_dir(args.PATH, dir_json, True if args.download_images else False)
 
             if movie_name:
                 if movie_not_found:
@@ -312,9 +317,28 @@ def util(args):
             edit('poster', selection, input("New poster : "))
         else:
             print("Exiting")
+    elif args.download_images:
+        print('DOWNLOAD IMAGES!')
+        cache_images(get_all_images().fetchall())
 
     else:
         sort_table(get_table_everything(printout=True), 0, False)
+
+
+def cache_images(urls):
+    if not os.path.exists(CONFIG_PATH + 'cache/'):
+        os.makedirs(CONFIG_PATH + 'cache/')
+    for i in urls:
+        logger.debug(i[1])
+        hash_name = hashlib.sha256(uuid.uuid4().hex.encode() + i[1].encode()).hexdigest()
+        logger.debug("HASH : " + str(hash_name))
+        try:
+            urllib.request.urlretrieve(i[1], CONFIG_PATH + 'cache/' + str(hash_name) + '.jpg')
+            edit('poster', i[0], CONFIG_PATH + 'cache/' + str(hash_name) + '.jpg')
+        except ValueError as error:
+            logger.error(error)
+        except urllib.error.URLError:
+            logger.error("Not a valid url")
 
 
 def get_table_everything(printout=False, return_item=False):
@@ -407,7 +431,7 @@ not_a_movie = []
 movie_not_found = []
 
 
-def scan_dir(path, dir_json):
+def scan_dir(path, dir_json, download_images=False):  # TODO CLEANUP dir_json value not used, remove.
     original_path = path
     # Preprocess the total files count
     for root, dirs, files in tqdm(os.walk(path)):
@@ -430,6 +454,8 @@ def scan_dir(path, dir_json):
                 data.update({"file_info": {"name": name, "location": original_path, "extension": ext}})
                 movies = db_to_json()
                 add_movie(data, FORCE_INDEX)
+                if download_images:
+                    cache_images([(data['file_info']['name'], data['poster'])])
 
             else:
                 if data is not None:

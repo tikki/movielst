@@ -196,3 +196,9 @@ def delete_all_movies():
     cur.execute('DELETE FROM movies')
     con.commit()
     con.close()
+
+
+def get_all_images():
+    con = connect_db()
+    cur = con.cursor()
+    return cur.execute('SELECT file_info_name, poster from movies')
