@@ -34,3 +34,7 @@ class AddUserForm(FlaskForm):
 class IndexForm(FlaskForm):
     index_location = StringField("Folder to index")
     run_index = SubmitField("Run Indexing")
+
+
+class SearchForm(FlaskForm):
+    autocomp = StringField('Search movie', id='autocomplete')

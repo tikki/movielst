@@ -30,6 +30,7 @@
       </li>
     </ul>
     {% if request.path == "/" %}
+      {{ search.autocomp.label }}: {{search.autocomp }}
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <button type="button" class="btn" data-toggle="modal" data-target="#indexModal"><i class="icon-plus">Run indexer</i></button>

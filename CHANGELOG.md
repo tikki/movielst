@@ -1,8 +1,26 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [UNRELEASED] -
+### Added
+- Add button to delete index from web page.
+- Add ability to index movies from web page.
+- Display warning message on web start page if no movie index is found.
+- Add min_size_to_index configuration option to web settings page.
+- Add ability to edit poster location from cli.
+- Add function to download/cache all poster images to local directory.
+### Changed
+- All endpoints now have checks if user login is required.
+- Deleting a user from web settings page now asks for confirmation.
+- Log level configuration in the settings page now has a dropdown list instead of textfield.
+- Web interface now retrieving cached posters if available.
+
+
+### Fixed 
+- Login page using external dependencies instead of local ones.
+
 ## [2.4.1] - 2018-10-28
-## Fixed
+### Fixed
 - Removed debug printouts.
 
 ## [2.4.0] - 2018-10-28

@@ -1,9 +1,9 @@
-from flask import Flask, render_template, send_from_directory, send_file, session, request, redirect
+from flask import Flask, render_template, send_from_directory, send_file, session, request, redirect, Response
 import json
 import subprocess
 import re
 from movielst import config, database
-from web.forms import SettingsForm, LoginForm, AddUserForm, IndexForm
+from web.forms import SettingsForm, LoginForm, AddUserForm, IndexForm, SearchForm
 from web.dependency import check_for_dep
 
 app = Flask(__name__)
@@ -34,6 +34,15 @@ def cached_image_file(filename):
     return send_from_directory(app.config['CACHE_FOLDER'], filename=filename)
 
 
+@app.route('/api/v1/autocomplete', methods=['GET'])
+def autocomplete():
+    movie_names_json = database.db_to_json()
+    movie_names = []
+    for i in movie_names_json:
+        movie_names.append(i['title'])
+    return Response(json.dumps(movie_names), mimetype='application/json')
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
@@ -53,6 +62,7 @@ def index():
                 else:
                     return redirect('/')
         form.process()
+        search_form = SearchForm(request.form)
         if data is not None:
             for movie in data:
                 if re.match(regex_url_valid, movie["poster"]):
@@ -61,6 +71,7 @@ def index():
                 else:
                     # Is not a url, return cached True to show local file instead#
                     cached = True
+        return render_template('home.html', movie_list=data, form=form, error=error, cached=cached, search=search_form)
 
 
 @app.route('/movie/<variable>')
