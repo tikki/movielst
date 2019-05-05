@@ -6,7 +6,8 @@ dep_folder = config.CONFIG_PATH + 'dep/'
 dependencies = ['https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
                 'https://code.jquery.com/jquery-3.3.1.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
-                'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js']
+                'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/blazy/1.8.2/blazy.min.js']
 
 
 def check_for_dep():

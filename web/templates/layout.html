@@ -15,6 +15,7 @@
         <script src="{{ url_for('dep_files', filename='bootstrap.min.js') }}" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
         <script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js"></script>
+        <script src="{{ url_for('dep_files', filename='blazy.min.js') }}"></script>
         {% include 'includes/_navbar.html' %}
         <div class="container">
             {% block body %}{% endblock %}

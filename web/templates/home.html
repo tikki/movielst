@@ -17,9 +17,9 @@
                     <div class="gallery">
                         <a href="/movie/{{ movie["title"] }} ">
                             {% if cached %}
-                                <img src="{{ url_for('cached_image_file', filename=movie["poster"].split('cache/')[1]) }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
+                                <img class="b-lazy" data-src="{{ url_for('cached_image_file', filename=movie['poster'].split('cache/')[1]) }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" src="{{ url_for('static', filename='default-poster.png') }}" />
                             {% else %}
-                                <img src="{{ movie["poster"] }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" >
+                                <img class="b-lazy" data-src="{{ movie['poster'] }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" src="{{ url_for('static', filename='default-poster.png') }}" />
                             {% endif %}
                         </a>
                         <div class="desc">{{ movie["title"] }}</div>
@@ -52,6 +52,15 @@
         </div>
     </div>
     <script>
+        var bLazy = new Blazy({
+            breakpointgs: [{}], success: function(element) {
+                setTimeout(function() {
+                    var parent = element.parentNode;
+                    parent.className = parent.className.replace(/\bloading\b/,'');
+                }, 200);
+            }
+        });
+
         $(function() {
             $.ajax({
                 url: '{{ url_for("autocomplete") }}'
