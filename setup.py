@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='movielst',
-      version='2.4.1',
+      version='2.5.0',
       description='Everything about your movies within the command line.',
       long_description=open('README.md', 'r').read(),
       long_description_content_type='text/markdown',
