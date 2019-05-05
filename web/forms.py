@@ -38,3 +38,4 @@ class IndexForm(FlaskForm):
 
 class SearchForm(FlaskForm):
     autocomp = StringField('Search movie', id='autocomplete')
+    search = SubmitField('Search')

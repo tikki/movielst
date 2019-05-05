@@ -63,6 +63,9 @@ def index():
                     return redirect('/')
         form.process()
         search_form = SearchForm(request.form)
+        if search_form.search.data:
+            if search_form.autocomp.data:
+                return redirect('/movie/' + search_form.autocomp.data)
         if data is not None:
             for movie in data:
                 if re.match(regex_url_valid, movie["poster"]):
@@ -82,6 +85,7 @@ def movie(variable):
         data = database.db_to_json()
         i = 0
         list = {}
+        cached = None
         for datas in data:
             if datas["title"] == variable:
                 list["title"] = datas["title"]
