@@ -2,6 +2,6 @@
 
 {% block body %}
     <video width="320" height="240" controls>
-        <source src="{{ movie }}" type="video/mp4">
+        <source src="{{ url_for('movie_folder', filename=aw }}" type="video/mp4">
     </video>
 {% endblock %}

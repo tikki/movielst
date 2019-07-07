@@ -202,3 +202,9 @@ def get_all_images():
     con = connect_db()
     cur = con.cursor()
     return cur.execute('SELECT file_info_name, poster from movies')
+
+
+def get_location_of_movie(name):
+    con = connect_db()
+    cur = con.cursor()
+    return cur.execute('SELECT file_info_location FROM movies WHERE file_info_name=?', (name,))

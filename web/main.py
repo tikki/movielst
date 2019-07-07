@@ -98,6 +98,7 @@ def movie(variable):
                 list["cast"] = datas["cast"]
                 list["director"] = datas["director"]
                 list["poster"] = datas["poster"]
+                list["file_info_name"] = datas["file_info"]["name"]
                 if re.match(regex_url_valid, list["poster"]):
                     cached = False
                 else:
@@ -176,9 +177,15 @@ def export(type, name):
             return "File type not supported"
 
 
-@app.route('/movie/play/<variable>')
-def play(variable):
-    return send_from_directory('/', variable)
+@app.route('/movie/play/<filename>', methods=["GET"])
+def play(filename):
+    location = database.get_location_of_movie(filename).fetchall()
+    print(str(location[0]).replace("('", '').replace("',)", ''))
+    app.config['MOVIE_FOLDER'] = str(location[0]).replace("('", '').replace("',)", '')
+    print(app.config['MOVIE_FOLDER'])
+    file = app.config['MOVIE_FOLDER'] + "\\" + filename
+    print(file)
+    return send_from_directory(app.config['MOVIE_FOLDER'], filename)
 
 
 @app.route('/login', methods=['GET', 'POST'])
