@@ -20,6 +20,7 @@ setup(name='movielst',
           'tqdm',
           'colorama',
           'xlsxwriter',
+          'requests',
           'flask',
           'Flask-WTF',
           'passlib'
