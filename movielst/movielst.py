@@ -264,11 +264,11 @@ def util(args):
             logger.warning('Used something else than supported arguments for exporting.')
     elif args.edit_config:
         if platform.system() == 'Darwin':
-            subprocess.call(('open', CONFIG_PATH + CONFIG_FILE))
+            subprocess.call(('open', str(CONFIG_PATH)))
         elif platform.system() == 'Linux':
-            subprocess.call(('xdg-open', CONFIG_PATH + CONFIG_FILE))
+            subprocess.call(('xdg-open', str(CONFIG_PATH)))
         elif platform.system() == 'Windows':
-            subprocess.call(('start', CONFIG_PATH + CONFIG_FILE), shell=True)
+            subprocess.call(('start', str(CONFIG_PATH)), shell=True)
         else:
             print("Can not open the configuration file. System not supported.")
 
@@ -326,15 +326,21 @@ def util(args):
 
 
 def cache_images(urls):
-    if not os.path.exists(CONFIG_PATH + 'cache/'):
-        os.makedirs(CONFIG_PATH + 'cache/')
+    cache_dir = CACHE_DIR / 'images'
+
+    try:
+        cache_dir.mkdir(parents=True)
+    except FileExistsError:
+        pass
+
     for i in urls:
         logger.debug(i[1])
         hash_name = hashlib.sha256(uuid.uuid4().hex.encode() + i[1].encode()).hexdigest()
         logger.debug("HASH : " + str(hash_name))
         try:
-            urllib.request.urlretrieve(i[1], CONFIG_PATH + 'cache/' + str(hash_name) + '.jpg')
-            edit('poster', i[0], CONFIG_PATH + 'cache/' + str(hash_name) + '.jpg')
+            cache_path = str((cache_dir / hash_name).with_suffix('.jpg'))
+            urllib.request.urlretrieve(i[1], cache_path)
+            edit('poster', i[0], cache_path)
         except ValueError as error:
             logger.error(error)
         except urllib.error.URLError:

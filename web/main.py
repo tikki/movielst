@@ -8,8 +8,8 @@ from web.dependency import check_for_dep
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'not really secret but still a really useless secret key for this use case'
-app.config['DEP_FOLDER'] = config.CONFIG_PATH + 'dep/'
-app.config['CACHE_FOLDER'] = config.CONFIG_PATH + 'cache/'
+app.config['DEP_FOLDER'] = str(config.CACHE_DIR / 'deps')
+app.config['CACHE_FOLDER'] = str(config.CACHE_DIR / 'images')
 
 regex_url_valid = re.compile(
         r'^(?:http|ftp)s?://'  # http:// or https://
@@ -72,6 +72,7 @@ def index():
                     # is a valid url, return cached False, ie. do nothing
                     cached = False
                 else:
+                    movie["poster"] = movie["poster"].replace(app.config['CACHE_FOLDER'] + '/', '')
                     # Is not a url, return cached True to show local file instead#
                     cached = True
         return render_template('home.html', movie_list=data, form=form, error=error, cached=cached, search=search_form)
@@ -102,7 +103,7 @@ def movie(variable):
                 if re.match(regex_url_valid, list["poster"]):
                     cached = False
                 else:
-                    list["poster"] = list["poster"].replace(config.CONFIG_PATH + 'cache/', '')
+                    list["poster"] = list["poster"].replace(app.config['CACHE_FOLDER'] + '/', '')
                     cached = True
 
                 list["description"] = datas["description"]
@@ -167,12 +168,13 @@ def export(type, name):
     if not session.get('logged_in') and config.get_setting('Web', 'require_login') == "True":
         return login()
     else:
+        export_path = str(config.CACHE_DIR / 'exports' / name)
         if type == 'csv':
-            database.export_to_csv(config.CONFIG_PATH + name)
-            return send_file(config.CONFIG_PATH + name, as_attachment=True)
+            database.export_to_csv(export_path)
+            return send_file(export_path, as_attachment=True)
         elif type == 'xlsx':
-            database.export_to_xlsx(config.CONFIG_PATH + name)
-            return send_file(config.CONFIG_PATH + name, as_attachment=True)
+            database.export_to_xlsx(export_path)
+            return send_file(export_path, as_attachment=True)
         else:
             return "File type not supported"
 

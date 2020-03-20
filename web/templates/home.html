@@ -17,7 +17,7 @@
                     <div class="gallery">
                         <a href="/movie/{{ movie["title"] }} ">
                             {% if cached %}
-                                <img class="b-lazy" data-src="{{ url_for('cached_image_file', filename=movie['poster'].split('cache/')[1]) }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" src="{{ url_for('static', filename='default-poster.png') }}" />
+                                <img class="b-lazy" data-src="{{ url_for('cached_image_file', filename=movie['poster']) }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" src="{{ url_for('static', filename='default-poster.png') }}" />
                             {% else %}
                                 <img class="b-lazy" data-src="{{ movie['poster'] }}" onerror="this.src='{{ url_for('static', filename='default-poster.png') }}';" src="{{ url_for('static', filename='default-poster.png') }}" />
                             {% endif %}
